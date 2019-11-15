@@ -70,6 +70,11 @@ contract SupplierFinancing {
 
   	// 增加企业资产。
 	function addAsset(uint256 amount) public {
+		// 权限判断。
+		if (msg.sender != bankAddr) {
+			emit AddAsset(-1, msg.sender, amount);
+			return;
+		}
 		companies[msg.sender].asset += amount;
     	// 触发事件。
     	emit AddAsset(0, msg.sender, amount);
