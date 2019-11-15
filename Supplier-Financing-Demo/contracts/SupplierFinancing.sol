@@ -1,6 +1,6 @@
 pragma solidity ^0.4.21;
 
-contract SupplyFinancing {
+contract SupplierFinancing {
   	// 事件：注册企业。
   	event Register(int256 ret, address addr);
   	// 事件：增加企业资产。
