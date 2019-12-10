@@ -2,7 +2,7 @@ import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from './core/core.config';
-import { ContextModule } from './core/core.context';
+import { ContextMiddleware, ContextModule } from './core/core.context';
 import { DatabaseModule } from './core/core.database';
 import { FilterModule } from './core/core.filter';
 import { AuthGuard } from './core/core.guard';
@@ -25,7 +25,7 @@ import { UserModule } from './user/user.module';
 })
 export class AppModule {
   public configure(consumer: MiddlewareConsumer): void {
-    // consumer.apply(ContextMiddleware).forRoutes('*');
+    consumer.apply(ContextMiddleware).forRoutes('*');
     consumer.apply(LoggerMiddleware).forRoutes('*');
   }
 }
