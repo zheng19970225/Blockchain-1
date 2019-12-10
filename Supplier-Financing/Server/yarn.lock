@@ -149,6 +149,16 @@
   resolved "https://registry.npm.taobao.org/@types/config/download/@types/config-0.0.36.tgz#bf53ca640f3a1a6a2072a9f33e02a44def07a40b"
   integrity sha1-v1PKZA86GmogcqnzPgKkTe8HpAs=
 
+"@types/connect-redis@^0.0.13":
+  version "0.0.13"
+  resolved "https://registry.npm.taobao.org/@types/connect-redis/download/@types/connect-redis-0.0.13.tgz#9237f7f57b79d9f6418993fd6f3b6ea923859079"
+  integrity sha1-kjf39Xt52fZBiZP9bztuqSOFkHk=
+  dependencies:
+    "@types/express" "*"
+    "@types/express-session" "*"
+    "@types/ioredis" "*"
+    "@types/redis" "*"
+
 "@types/connect@*":
   version "3.4.32"
   resolved "https://registry.npm.taobao.org/@types/connect/download/@types/connect-3.4.32.tgz#aa0e9616b9435ccad02bc52b5b454ffc2c70ba28"
@@ -169,7 +179,15 @@
     "@types/node" "*"
     "@types/range-parser" "*"
 
-"@types/express@^4.16.0":
+"@types/express-session@*":
+  version "1.15.16"
+  resolved "https://registry.npm.taobao.org/@types/express-session/download/@types/express-session-1.15.16.tgz#91ba1f47a2fc2088811e8d7c17702ec92d8a8b23"
+  integrity sha1-kbofR6L8IIiBHo18F3AuyS2KiyM=
+  dependencies:
+    "@types/express" "*"
+    "@types/node" "*"
+
+"@types/express@*", "@types/express@^4.16.0":
   version "4.17.2"
   resolved "https://registry.npm.taobao.org/@types/express/download/@types/express-4.17.2.tgz#a0fb7a23d8855bac31bc01d5a58cadd9b2173e6c"
   integrity sha1-oPt6I9iFW6wxvAHVpYyt2bIXPmw=
@@ -194,7 +212,7 @@
   dependencies:
     globby "*"
 
-"@types/ioredis@^4.0.4":
+"@types/ioredis@*", "@types/ioredis@^4.0.4":
   version "4.14.1"
   resolved "https://registry.npm.taobao.org/@types/ioredis/download/@types/ioredis-4.14.1.tgz?cache=0&sync_timestamp=1575612227165&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fioredis%2Fdownload%2F%40types%2Fioredis-4.14.1.tgz#69b501d5aa0438a3617b1542c47b08cbd7d0b3a1"
   integrity sha1-abUB1aoEOKNhexVCxHsIy9fQs6E=
@@ -234,6 +252,13 @@
   version "1.2.3"
   resolved "https://registry.npm.taobao.org/@types/range-parser/download/@types/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
   integrity sha1-fuMwunyq+5gJC+zoal7kQRWQTCw=
+
+"@types/redis@*":
+  version "2.8.14"
+  resolved "https://registry.npm.taobao.org/@types/redis/download/@types/redis-2.8.14.tgz#2ed46d0f923f7ccd63fbe73a46a1241e606cf716"
+  integrity sha1-LtRtD5I/fM1j++c6RqEkHmBs9xY=
+  dependencies:
+    "@types/node" "*"
 
 "@types/serve-static@*":
   version "1.13.3"
@@ -807,6 +832,14 @@ configstore@^3.0.0:
     write-file-atomic "^2.0.0"
     xdg-basedir "^3.0.0"
 
+connect-redis@3.4.0:
+  version "3.4.0"
+  resolved "https://registry.npm.taobao.org/connect-redis/download/connect-redis-3.4.0.tgz#4040dd3755bddbf93478fb84937a74052c31b965"
+  integrity sha1-QEDdN1W92/k0ePuEk3p0BSwxuWU=
+  dependencies:
+    debug "^4.0.1"
+    redis "^2.8.0"
+
 consola@^2.3.0:
   version "2.11.0"
   resolved "https://registry.npm.taobao.org/consola/download/consola-2.11.0.tgz#9bb35d850d8cecde894ce2eb4d792fa6b90d9013"
@@ -923,7 +956,7 @@ debug@^3.2.6:
   dependencies:
     ms "^2.1.1"
 
-debug@^4.1.1:
+debug@^4.0.1, debug@^4.1.1:
   version "4.1.1"
   resolved "https://registry.npm.taobao.org/debug/download/debug-4.1.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdebug%2Fdownload%2Fdebug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
   integrity sha1-O3ImAlUQnGtYnO4FDx1RYTlmR5E=
@@ -1040,6 +1073,11 @@ dotenv@^6.2.0:
   version "6.2.0"
   resolved "https://registry.npm.taobao.org/dotenv/download/dotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
   integrity sha1-lBwEEFNdlCyL7PKNPzV9vZ1HYGQ=
+
+double-ended-queue@^2.1.0-0:
+  version "2.1.0-0"
+  resolved "https://registry.npm.taobao.org/double-ended-queue/download/double-ended-queue-2.1.0-0.tgz#103d3527fd31528f40188130c841efdd78264e5c"
+  integrity sha1-ED01J/0xUo9AGIEwyEHv3XgmTlw=
 
 duplexer3@^0.1.4:
   version "0.1.4"
@@ -2747,7 +2785,7 @@ rechoir@^0.6.2:
   dependencies:
     resolve "^1.1.6"
 
-redis-commands@1.5.0:
+redis-commands@1.5.0, redis-commands@^1.2.0:
   version "1.5.0"
   resolved "https://registry.npm.taobao.org/redis-commands/download/redis-commands-1.5.0.tgz#80d2e20698fe688f227127ff9e5164a7dd17e785"
   integrity sha1-gNLiBpj+aI8icSf/nlFkp90X54U=
@@ -2757,12 +2795,26 @@ redis-errors@^1.0.0, redis-errors@^1.2.0:
   resolved "https://registry.npm.taobao.org/redis-errors/download/redis-errors-1.2.0.tgz#eb62d2adb15e4eaf4610c04afe1529384250abad"
   integrity sha1-62LSrbFeTq9GEMBK/hUpOEJQq60=
 
+redis-parser@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.npm.taobao.org/redis-parser/download/redis-parser-2.6.0.tgz#52ed09dacac108f1a631c07e9b69941e7a19504b"
+  integrity sha1-Uu0J2srBCPGmMcB+m2mUHnoZUEs=
+
 redis-parser@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/redis-parser/download/redis-parser-3.0.0.tgz#b66d828cdcafe6b4b8a428a7def4c6bcac31c8b4"
   integrity sha1-tm2CjNyv5rS4pCin3vTGvKwxyLQ=
   dependencies:
     redis-errors "^1.0.0"
+
+redis@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.npm.taobao.org/redis/download/redis-2.8.0.tgz#202288e3f58c49f6079d97af7a10e1303ae14b02"
+  integrity sha1-ICKI4/WMSfYHnZevehDhMDrhSwI=
+  dependencies:
+    double-ended-queue "^2.1.0-0"
+    redis-commands "^1.2.0"
+    redis-parser "^2.6.0"
 
 reflect-metadata@^0.1.12, reflect-metadata@^0.1.13:
   version "0.1.13"
