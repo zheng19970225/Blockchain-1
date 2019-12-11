@@ -22,7 +22,7 @@ const config: IEnv = {
     secret: 'supplier-financing-session-secret',
     name: 'supplier-financing-server-session',
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
       domain: 'localhost',
       maxAge: 7 * 24 * 60 * 60 * 1000,
