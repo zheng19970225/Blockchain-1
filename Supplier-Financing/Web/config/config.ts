@@ -1,4 +1,4 @@
-import { MenuTheme } from 'antd/es/menu';
+import { MenuTheme } from 'antd/es/menu/MenuContext';
 import { IConfig } from 'umi-types';
 import { plugins } from './plugin.config';
 import { routes } from './route.config';
@@ -59,7 +59,7 @@ export default {
   define: {
     IS_PROD: false,
     IS_DEV: true,
-    API_BASE: 'http://localhost:3008',
+    API_BASE: 'http://localhost:3008/api',
   },
 } as IConfig;
 

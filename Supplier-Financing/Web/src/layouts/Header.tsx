@@ -65,14 +65,6 @@ class HeaderView extends PureComponent<HeaderViewProps, HeaderViewState> {
       router.push('/account/center');
       return;
     }
-    if (key === 'topup' && location!.pathname !== '/account/topup') {
-      router.push('/account/topup');
-      return;
-    }
-    if (key === 'transaction' && location!.pathname !== '/account/transaction') {
-      router.push('/account/transaction');
-      return;
-    }
     if (key === 'logout') {
       dispatch!({ type: 'login/logout' } as LoginLogoutActionType);
     }

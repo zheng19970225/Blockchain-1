@@ -1,10 +1,11 @@
 import { Effect } from '@/models/connect';
-import { doLoginForDevelopment, doLogout } from '@/pages/Login/services';
-import { APIResponse } from '@/types';
+import { doLogin, doLogout, ResponseLogin } from '@/pages/Login/services';
 import { setAuthority } from '@/utils/authority';
 import { deleteAllCookies } from '@/utils/cookies';
-import { DEVELOPMENT_UID, settings } from '../../config/config';
-import { CurrentUser, emptyUser } from './user';
+import { formatAppCode } from '@/utils/enum';
+import { message } from 'antd';
+import { formatMessage } from 'umi-plugin-locale';
+import { emptyUser, formatUserType } from './user';
 
 export interface LoginModelState {
   status: boolean | undefined;
@@ -15,7 +16,6 @@ export interface LoginModelType {
   state: LoginModelState;
   effects: {
     login: Effect;
-    callback: Effect;
     logout: Effect;
   };
   reducers: {};
@@ -23,11 +23,10 @@ export interface LoginModelType {
 
 export interface LoginLoginActionType {
   type: 'login/login';
-}
-
-export interface LoginCallbackActionType {
-  type: 'login/callback';
-  payload?: CurrentUser;
+  payload?: {
+    uscc: string;
+    password: string;
+  };
 }
 
 export interface LoginLogoutActionType {
@@ -40,22 +39,14 @@ const LoginModel: LoginModelType = {
     status: undefined,
   },
   effects: {
-    *login(action, { call, put }) {
-      // 若为本地开发环境
-      if (IS_DEV) {
-        const uid = DEVELOPMENT_UID;
-        const response: APIResponse = yield call(doLoginForDevelopment, { uid });
-        window.location.href = response.data;
+    *login(action: LoginLoginActionType, { call, put }) {
+      const res: ResponseLogin = yield call(doLogin, action.payload!);
+      if (res.code !== 200) {
+        message.error(formatAppCode(res.sub));
         return;
       }
-      window.location.href = `https://open.weixin.qq.com/connect/qrconnect?appid=${
-        settings.wechat.appid
-      }&redirect_uri=${encodeURIComponent(
-        settings.wechat.redirect_uri,
-      )}&response_type=code&scope=snsapi_login#wechat_redirect`;
-    },
-    callback(action, { call, put }) {
-      setAuthority('user');
+      message.success(formatMessage({ id: 'login.success' }));
+      setAuthority(formatUserType(res.data.type));
       window.location.href = '/';
     },
     *logout(_, { call, put }) {

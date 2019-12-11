@@ -1,7 +1,6 @@
 import { ConnectProps } from '@/models/connect';
-import { CurrentUser } from '@/models/user';
+import { CurrentUser, formatUserTypeMessage } from '@/models/user';
 import { setAuthority } from '@/utils/authority';
-import { useHTTPS } from '@/utils/utils';
 import { Avatar, Icon, Menu, Spin } from 'antd';
 import { Settings } from 'config/config';
 import React, { PureComponent } from 'react';
@@ -16,6 +15,9 @@ interface ClickParam {
   item: any;
   domEvent: any;
 }
+
+const DEFAULT_AVATAR =
+  'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png';
 
 export interface GlobalHeaderRightProps extends ConnectProps {
   notices?: Array<{ datetime: string; id: string; key: string; extra: any; status: number }>;
@@ -45,20 +47,12 @@ class GlobalHeaderRight extends PureComponent<GlobalHeaderRightProps> {
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
         <Menu.Item key="userCenter">
           <Icon type="user" />
-          <FormattedMessage id="menu.account.center" defaultMessage="个人中心" />
-        </Menu.Item>
-        <Menu.Item key="topup">
-          <Icon type="dollar" />
-          <FormattedMessage id="menu.account.topup" defaultMessage="账户充值" />
-        </Menu.Item>
-        <Menu.Item key="transaction">
-          <Icon type="transaction" />
-          <FormattedMessage id="menu.account.transaction" defaultMessage="交易记录" />
+          <FormattedMessage id="menu.account.center" />
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="logout">
           <Icon type="logout" />
-          <FormattedMessage id="menu.account.logout" defaultMessage="注销" />
+          <FormattedMessage id="menu.account.logout" />
         </Menu.Item>
       </Menu>
     );
@@ -70,16 +64,11 @@ class GlobalHeaderRight extends PureComponent<GlobalHeaderRightProps> {
       <div className={className}>
         {this.props.loginLoading ? (
           <Spin size="small" style={{ marginLeft: 8, marginRight: 8 }} />
-        ) : currentUser!.nickname ? (
+        ) : currentUser!.uid !== 0 ? (
           <HeaderDropdown overlay={menu} placement="topRight">
             <span className={`${styles.action} ${styles.account}`}>
-              <Avatar
-                size="small"
-                className={styles.avatar}
-                src={useHTTPS(currentUser!.avatar!)}
-                alt="avatar"
-              />
-              <span className={styles.name}>{currentUser!.nickname}</span>
+              <Avatar size="small" className={styles.avatar} src={DEFAULT_AVATAR} alt="avatar" />
+              <span className={styles.name}>{formatUserTypeMessage(currentUser!.type)}</span>
             </span>
           </HeaderDropdown>
         ) : (
@@ -87,7 +76,7 @@ class GlobalHeaderRight extends PureComponent<GlobalHeaderRightProps> {
             className={`${styles.action} ${styles.account}`}
             onClick={this.onLoginButtonPressed}
           >
-            <Avatar size="small" className={styles.avatar} src={currentUser!.avatar} alt="avatar" />
+            <Avatar size="small" className={styles.avatar} src={DEFAULT_AVATAR} alt="avatar" />
             <span className={styles.name}>请登录</span>
           </span>
         )}

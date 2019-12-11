@@ -4,9 +4,7 @@ import { AnyAction } from 'redux';
 import { RouterTypes } from 'umi';
 import { Settings as SettingModelState } from '../../config/config';
 import { GlobalModelState } from './global';
-import { JobModelState } from './job';
 import { MenuModelState } from './menu';
-import { ResumeModelState } from './resume';
 import { UserModelState } from './user';
 
 export { GlobalModelState, MenuModelState, SettingModelState, UserModelState };
@@ -48,8 +46,6 @@ export interface Loading {
     setting?: boolean;
     user?: boolean;
     login?: boolean;
-    job?: boolean;
-    resume?: boolean;
   };
 }
 
@@ -59,8 +55,6 @@ export interface ConnectState {
   menu: MenuModelState;
   setting: SettingModelState;
   user: UserModelState;
-  job: JobModelState;
-  resume: ResumeModelState;
 }
 
 /**

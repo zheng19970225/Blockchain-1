@@ -1,11 +1,11 @@
-import memoizeOne from 'memoize-one';
-import isEqual from 'lodash/isEqual';
-import { formatMessage } from 'umi-plugin-react/locale';
+import { MenuDataItem, Route } from '@/types';
 import Authorized from '@/utils/Authorized';
-import { Route, MenuDataItem } from '@/types';
-import { IRoute } from 'umi-types';
 import { Effect } from 'dva';
+import isEqual from 'lodash/isEqual';
+import memoizeOne from 'memoize-one';
 import { Reducer } from 'redux';
+import { formatMessage } from 'umi-plugin-react/locale';
+import { IRoute } from 'umi-types';
 
 const { check } = Authorized;
 

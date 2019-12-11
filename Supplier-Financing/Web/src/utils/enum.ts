@@ -1,3 +1,5 @@
+import { formatMessage } from 'umi-plugin-locale';
+
 /**
  * 业务状态码
  */
@@ -30,4 +32,25 @@ export enum AppCode {
    * 用户不存在
    */
   USER_NOT_EXIST_EXCEPTION = 2,
+  /**
+   * 密码错误
+   */
+  USER_PASSWORD_EXCEPTION = 3,
+}
+
+/**
+ * 显示业务码信息。
+ * @param sub 业务错误码
+ */
+export function formatAppCode(sub: AppCode): string {
+  switch (sub) {
+    case AppCode.USER_HAS_LOGGED_IN_EXCEPTION:
+      return formatMessage({ id: 'error.USER_HAS_LOGGED_IN_EXCEPTION' });
+    case AppCode.USER_NOT_EXIST_EXCEPTION:
+      return formatMessage({ id: 'error.USER_NOT_EXIST_EXCEPTION' });
+    case AppCode.USER_PASSWORD_EXCEPTION:
+      return formatMessage({ id: 'error.USER_PASSWORD_EXCEPTION' });
+    default:
+      return formatMessage({ id: 'error.UNKNOWN' });
+  }
 }
