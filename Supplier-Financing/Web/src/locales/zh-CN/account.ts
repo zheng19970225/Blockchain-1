@@ -7,5 +7,5 @@ export default {
   'account.password': '用户密码',
   'account.type.admin_bank': '中央银行',
   'account.type.bank': '银行',
-  'account.type.company': '企业',
+  'account.type.company': '公司',
 };

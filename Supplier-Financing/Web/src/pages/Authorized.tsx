@@ -33,7 +33,9 @@ const AuthComponent: React.FC<AuthComponentProps> = ({ children, location, route
         authority={getRouteAuthority(location!.pathname, routerData)!}
         noMatch={
           currentUser.uid !== 0 ? (
-            <Redirect to="/account/center" />
+            location!.pathname === '/exception/403' ? null : (
+              <Redirect to="/exception/403" />
+            )
           ) : location!.pathname === '/exception/404' ? null : (
             <Redirect to="/exception/404" />
           )

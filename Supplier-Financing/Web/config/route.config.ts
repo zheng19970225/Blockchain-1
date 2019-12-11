@@ -31,6 +31,29 @@ export const routes: Route[] = [
         icon: 'smile',
         component: './Welcome',
       },
+      // 银行和公司注册页面
+      {
+        path: '/registration',
+        name: 'registration',
+        icon: 'idcard',
+        authority: ['admin_bank', 'bank'],
+        routes: [
+          {
+            path: '/registration/bank',
+            name: 'bank',
+            icon: 'bank',
+            authority: ['admin_bank'],
+            component: './Registration/Bank',
+          },
+          {
+            path: '/registration/company',
+            name: 'company',
+            icon: 'team',
+            authority: ['bank'],
+            component: './Registration/Company',
+          },
+        ],
+      },
       // 账户页面路由
       {
         path: '/account',
