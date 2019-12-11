@@ -5,13 +5,13 @@
   "author": "Mr. Tseng <jiahonzheng@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "yarn clean && tsc && shx mv ./dist/src/* ./dist && shx rm -rf ./dist/src && shx cp -r cert/ package.json yarn.lock ./dist",
+    "build": "yarn clean && tsc",
     "clean": "shx rm -rf dist",
     "format": "prettier --write \"**/*.{ts,js,json}\"",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "start": "cross-env NODE_ENV=development ts-node src/main.ts",
     "start:dev": "cross-env NODE_ENV=development nodemon",
-    "start:prod": "cross-env NODE_ENV=production node main.js"
+    "start:prod": "cross-env NODE_ENV=production node dist/src/main.js"
   },
   "dependencies": {
     "@nestjs/common": "^6.10.8",
