@@ -1,6 +1,5 @@
-import * as fs from 'fs';
 import * as path from 'path';
-import { Web3jService } from './packages/api';
+import { Condition, CRUDService, Table, Web3jService } from './packages/api';
 import { Configuration } from './packages/api/common/configuration';
 import * as utils from './packages/api/common/utils';
 import * as web3Utils from './packages/api/common/web3lib/utils';
@@ -211,5 +210,37 @@ export function sendRawTransactionUsingCustomCredentials(
         resolve(ret);
       })
       .catch(reject);
+  });
+}
+
+// 创建 CRUD 服务。
+const curdService = new CRUDService();
+
+export type TCondition = {
+  ne(key: string, value: string): void;
+  ge(key: string, value: string): void;
+  le(key: string, value: string): void;
+  gt(key: string, value: string): void;
+  lt(key: string, value: string): void;
+  eq(key: string, value: string): void;
+};
+
+export function newCondtion(): TCondition {
+  return new Condition();
+}
+
+export function select(
+  tableName: string,
+  key: string,
+  condition: TCondition,
+): Promise<any> {
+  return curdService.desc(tableName).then(info => {
+    const table = new Table(
+      info.tableName,
+      key,
+      info.valueFields,
+      info.optional,
+    );
+    return curdService.select(table, condition);
   });
 }

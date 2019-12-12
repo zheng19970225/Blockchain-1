@@ -5,7 +5,10 @@ import {
   CONTRACT_ABI,
   CONTRACT_ADDRESS,
   getPrivateKey,
+  newCondtion,
+  select,
   sendRawTransactionUsingCustomCredentials,
+  TCondition,
 } from './utils';
 
 @Injectable()
@@ -45,5 +48,22 @@ export class FiscoBcosService {
       this.logger.error(err);
       throw new SendTransactionException(err.toString ? err.toString() : err);
     }
+  }
+
+  /**
+   * 创建查询条件。
+   */
+  public crudCondition(): TCondition {
+    return newCondtion();
+  }
+
+  /**
+   * 数据查询。
+   * @param tableName 数据表名称
+   * @param key 键名称
+   * @param condition 查询条件
+   */
+  public crudSelect(tableName: string, key: string, condition: TCondition) {
+    return select(tableName, key, condition);
   }
 }
