@@ -54,21 +54,43 @@ export const routes: Route[] = [
           },
         ],
       },
+      // 凭证页面
+      {
+        path: '/receipt',
+        name: 'receipt',
+        icon: 'account-book',
+        authority: ['admin_bank', 'bank', 'company'],
+        routes: [
+          {
+            path: '/receipt/detail',
+            name: 'detail',
+            icon: 'account-book',
+            authority: ['admin_bank', 'bank', 'company'],
+            component: './Receipt',
+          },
+          {
+            path: '/receipt/transfer',
+            name: 'transfer',
+            icon: 'account-book',
+            authority: ['admin_bank', 'bank', 'company'],
+            component: './Receipt/TransferReceipt',
+          },
+          {
+            path: '/receipt/return',
+            name: 'return',
+            icon: 'account-book',
+            authority: ['admin_bank', 'bank', 'company'],
+            component: './Receipt/ReturnReceipt',
+          },
+        ],
+      },
       // 账户页面路由
       {
         path: '/account',
         name: 'account',
         icon: 'user',
         authority: ['admin_bank', 'bank', 'company'],
-        routes: [
-          {
-            path: '/account/center',
-            name: 'center',
-            icon: 'user',
-            authority: ['admin_bank', 'bank', 'company'],
-            component: './Account/Center',
-          },
-        ],
+        component: './Account/Center',
       },
       // 异常页面路由
       {

@@ -1,0 +1,17 @@
+export default {
+  'registration.uscc': '统一社会信用代码',
+  'registration.uscc.placeholder': '请输入注册企业的 18 位统一社会信用代码',
+  'registration.uscc.error': '请输入注册企业的 18 位统一社会信用代码',
+  'registration.type': '注册类型',
+  'registration.address': '公钥地址',
+  'registration.address.placeholder': '请输入注册企业的 42 位公钥地址',
+  'registration.address.error': '请输入注册企业的 42 位公钥地址',
+  'registration.password': '账户密码',
+  'registration.password.placeholder': '请输入注册企业的账户密码',
+  'registration.password.error': '请输入注册企业的账户密码',
+  'registration.publicKey': '签发者公钥地址',
+  'registration.privateKey': '签发者私钥内容',
+  'registration.privateKey.placeholder': '请输入签发者私钥内容',
+  'registration.privateKey.error': '请输入签发者私钥内容',
+  'registration.submit': '注册',
+};
