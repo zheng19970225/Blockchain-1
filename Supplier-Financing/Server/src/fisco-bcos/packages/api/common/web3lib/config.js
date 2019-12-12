@@ -15,5 +15,5 @@
 'use strict';
 
 module.exports = {
-    EncryptType: 0  // 0: ECDSA, other types are not supported yet
+  EncryptType: 0, // 0: ECDSA, other types are not supported yet
 };

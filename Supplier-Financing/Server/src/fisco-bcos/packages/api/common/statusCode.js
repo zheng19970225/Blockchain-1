@@ -15,97 +15,97 @@
 'use strict';
 
 class StatusCode {
-    static getStatusMessage(status) {
-        let message = '';
-        switch (status) {
-            case this.Success:
-                message = 'success';
-                break;
-            case this.Unknown:
-                message = 'unknown';
-                break;
-            case this.BadRLP:
-                message = 'bad RLP';
-                break;
-            case this.InvalidFormat:
-                message = 'invalid format';
-                break;
-            case this.OutOfGasIntrinsic:
-                message = 'out of gas intrinsic';
-                break;
-            case this.InvalidSignature:
-                message = 'invalid signature';
-                break;
-            case this.InvalidNonce:
-                message = 'invalid nonce';
-                break;
-            case this.NotEnoughCash:
-                message = 'not enough cash';
-                break;
-            case this.OutOfGasBase:
-                message = 'out of gas base';
-                break;
-            case this.BlockGasLimitReached:
-                message = 'block gas limit reached';
-                break;
-            case this.BadInstruction:
-                message = 'bad instruction';
-                break;
-            case this.BadJumpDestination:
-                message = 'bad jump destination';
-                break;
-            case this.OutOfGas:
-                message = 'out of gas';
-                break;
-            case this.OutOfStack:
-                message = 'out of stack';
-                break;
-            case this.StackUnderflow:
-                message = 'stack underflow';
-                break;
-            case this.NonceCheckFail:
-                message = 'nonce check fail';
-                break;
-            case this.BlockLimitCheckFail:
-                message = 'block limit check fail';
-                break;
-            case this.FilterCheckFail:
-                message = 'filter check fail';
-                break;
-            case this.NoDeployPermission:
-                message = 'no deploy permission';
-                break;
-            case this.NoCallPermission:
-                message = 'no call permission';
-                break;
-            case this.NoTxPermission:
-                message = 'no tx permission';
-                break;
-            case this.PrecompiledError:
-                message = 'precompiled error';
-                break;
-            case this.RevertInstruction:
-                message = 'revert instruction';
-                break;
-            case this.InvalidZeroSignatureFormat:
-                message = 'invalid zero signature format';
-                break;
-            case this.AddressAlreadyUsed:
-                message = 'address already used';
-                break;
-            case this.PermissionDenied:
-                message = 'permission denied';
-                break;
-            case this.CallAddressError:
-                message = 'call address error';
-                break;
-            default:
-                message = `unknown status code:${status}`;
-                break;
-        }
-
-        return message;
+  static getStatusMessage(status) {
+    let message = '';
+    switch (status) {
+      case this.Success:
+        message = 'success';
+        break;
+      case this.Unknown:
+        message = 'unknown';
+        break;
+      case this.BadRLP:
+        message = 'bad RLP';
+        break;
+      case this.InvalidFormat:
+        message = 'invalid format';
+        break;
+      case this.OutOfGasIntrinsic:
+        message = 'out of gas intrinsic';
+        break;
+      case this.InvalidSignature:
+        message = 'invalid signature';
+        break;
+      case this.InvalidNonce:
+        message = 'invalid nonce';
+        break;
+      case this.NotEnoughCash:
+        message = 'not enough cash';
+        break;
+      case this.OutOfGasBase:
+        message = 'out of gas base';
+        break;
+      case this.BlockGasLimitReached:
+        message = 'block gas limit reached';
+        break;
+      case this.BadInstruction:
+        message = 'bad instruction';
+        break;
+      case this.BadJumpDestination:
+        message = 'bad jump destination';
+        break;
+      case this.OutOfGas:
+        message = 'out of gas';
+        break;
+      case this.OutOfStack:
+        message = 'out of stack';
+        break;
+      case this.StackUnderflow:
+        message = 'stack underflow';
+        break;
+      case this.NonceCheckFail:
+        message = 'nonce check fail';
+        break;
+      case this.BlockLimitCheckFail:
+        message = 'block limit check fail';
+        break;
+      case this.FilterCheckFail:
+        message = 'filter check fail';
+        break;
+      case this.NoDeployPermission:
+        message = 'no deploy permission';
+        break;
+      case this.NoCallPermission:
+        message = 'no call permission';
+        break;
+      case this.NoTxPermission:
+        message = 'no tx permission';
+        break;
+      case this.PrecompiledError:
+        message = 'precompiled error';
+        break;
+      case this.RevertInstruction:
+        message = 'revert instruction';
+        break;
+      case this.InvalidZeroSignatureFormat:
+        message = 'invalid zero signature format';
+        break;
+      case this.AddressAlreadyUsed:
+        message = 'address already used';
+        break;
+      case this.PermissionDenied:
+        message = 'permission denied';
+        break;
+      case this.CallAddressError:
+        message = 'call address error';
+        break;
+      default:
+        message = `unknown status code:${status}`;
+        break;
     }
+
+    return message;
+  }
 }
 
 StatusCode.Success = '0x0';

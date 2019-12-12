@@ -23,86 +23,116 @@ const ServiceBase = require('../../common/serviceBase').ServiceBase;
 const Web3jService = require('../../web3j').Web3jService;
 
 class CNSService extends ServiceBase {
-    constructor() {
-        super();
-        this.web3jService = new Web3jService();
+  constructor() {
+    super();
+    this.web3jService = new Web3jService();
+  }
+
+  resetConfig() {
+    super.resetConfig();
+    this.web3jService.resetConfig();
+  }
+
+  _isValidAddress(address) {
+    let addressNoPrefix = utils.cleanHexPrefix(address);
+    return addressNoPrefix.length === constant.ADDRESS_LENGTH_IN_HEX;
+  }
+
+  _isValidCnsName(input) {
+    return input && (input.includes(':') || !this._isValidAddress(input));
+  }
+
+  async _send(abi, parameters, readOnly = false) {
+    let functionName = utils.spliceFunctionSignature(abi);
+    let receipt = null;
+
+    if (readOnly) {
+      receipt = await this.web3jService.call(
+        constant.CNS_PRECOMPILE_ADDRESS,
+        functionName,
+        parameters,
+      );
+      receipt = receipt.result;
+    } else {
+      receipt = await this.web3jService.sendRawTransaction(
+        constant.CNS_PRECOMPILE_ADDRESS,
+        functionName,
+        parameters,
+      );
+    }
+    return handleReceipt(receipt, abi)[0];
+  }
+
+  async registerCns(name, version, address, abi) {
+    check(arguments, string, string, string, string);
+
+    let parameters = [name, version, address, abi];
+    let output = await this._send(
+      constant.CNS_PRECOMPILE_ABI.insert,
+      parameters,
+    );
+    return parseInt(output);
+  }
+
+  async getAddressByContractNameAndVersion(contractNameAndVersion) {
+    check(arguments, string);
+
+    if (!this._isValidCnsName(contractNameAndVersion)) {
+      throw new PrecompiledError('invalid contract name and version');
     }
 
-    resetConfig() {
-        super.resetConfig();
-        this.web3jService.resetConfig();
+    let contractAddressInfo = null;
+
+    if (contractNameAndVersion.includes(':')) {
+      let [contractName, contractVersion] = contractNameAndVersion.split(
+        ':',
+        2,
+      );
+      let parameters = [contractName, contractVersion];
+      contractAddressInfo = await this._send(
+        constant.CNS_PRECOMPILE_ABI.selectByNameAndVersion,
+        parameters,
+        true,
+      );
+    } else {
+      let parameters = [contractNameAndVersion];
+      contractAddressInfo = await this._send(
+        constant.CNS_PRECOMPILE_ABI.selectByName,
+        parameters,
+        true,
+      );
     }
 
-    _isValidAddress(address) {
-        let addressNoPrefix = utils.cleanHexPrefix(address);
-        return addressNoPrefix.length === constant.ADDRESS_LENGTH_IN_HEX;
+    if ('[]\n' === contractAddressInfo) {
+      throw new PrecompiledError('the contract version does not exist');
     }
 
-    _isValidCnsName(input) {
-        return input && (input.includes(':') || !this._isValidAddress(input));
-    }
+    return JSON.parse(contractAddressInfo);
+  }
 
-    async _send(abi, parameters, readOnly = false) {
-        let functionName = utils.spliceFunctionSignature(abi);
-        let receipt = null;
+  async queryCnsByName(name) {
+    check(arguments, string);
 
-        if (readOnly) {
-            receipt = await this.web3jService.call(constant.CNS_PRECOMPILE_ADDRESS, functionName, parameters);
-            receipt = receipt.result;
-        } else {
-            receipt = await this.web3jService.sendRawTransaction(constant.CNS_PRECOMPILE_ADDRESS, functionName, parameters);
-        }
-        return handleReceipt(receipt, abi)[0];
-    }
+    let parameters = [name];
+    let contractAddressInfo = await this._send(
+      constant.CNS_PRECOMPILE_ABI.selectByName,
+      parameters,
+      true,
+    );
+    return JSON.parse(contractAddressInfo);
+  }
 
-    async registerCns(name, version, address, abi) {
-        check(arguments, string, string, string, string);
+  async queryCnsByNameAndVersion(name, version) {
+    check(arguments, string, string);
 
-        let parameters = [name, version, address, abi];
-        let output = await this._send(constant.CNS_PRECOMPILE_ABI.insert, parameters);
-        return parseInt(output);
-    }
-
-    async getAddressByContractNameAndVersion(contractNameAndVersion) {
-        check(arguments, string);
-
-        if (!this._isValidCnsName(contractNameAndVersion)) {
-            throw new PrecompiledError('invalid contract name and version');
-        }
-
-        let contractAddressInfo = null;
-
-        if (contractNameAndVersion.includes(':')) {
-            let [contractName, contractVersion] = contractNameAndVersion.split(':', 2);
-            let parameters = [contractName, contractVersion];
-            contractAddressInfo = await this._send(constant.CNS_PRECOMPILE_ABI.selectByNameAndVersion, parameters, true);
-        } else {
-            let parameters = [contractNameAndVersion];
-            contractAddressInfo = await this._send(constant.CNS_PRECOMPILE_ABI.selectByName, parameters, true);
-        }
-
-        if ('[]\n' === contractAddressInfo) {
-            throw new PrecompiledError('the contract version does not exist');
-        }
-
-        return JSON.parse(contractAddressInfo);
-    }
-
-    async queryCnsByName(name) {
-        check(arguments, string);
-
-        let parameters = [name];
-        let contractAddressInfo = await this._send(constant.CNS_PRECOMPILE_ABI.selectByName, parameters, true);
-        return JSON.parse(contractAddressInfo);
-    }
-
-    async queryCnsByNameAndVersion(name, version) {
-        check(arguments, string, string);
-
-        let parameters = [name, version];
-        let contractAddressInfo = await this._send(constant.CNS_PRECOMPILE_ABI.selectByNameAndVersion, parameters, true);
-        return JSON.parse(contractAddressInfo);
-    }
+    let parameters = [name, version];
+    let contractAddressInfo = await this._send(
+      constant.CNS_PRECOMPILE_ABI.selectByNameAndVersion,
+      parameters,
+      true,
+    );
+    return JSON.parse(contractAddressInfo);
+  }
 }
 
 module.exports.CNSService = CNSService;

@@ -20,81 +20,86 @@ const fs = require('fs');
 const path = require('path');
 const ContractsOutputDir = require('../constant').ContractsOutputDir;
 
-module.exports.produceSubCommandInfo = function (subCommand, handler) {
-    let subCommandInfo = {
-        name: subCommand.name,
-        describe: subCommand.describe,
-        handler: (argv) => {
-            try {
-                let ret = handler(argv);
-                if (ret) {
-                    if (ret instanceof Promise) {
-                        ret.then(result => {
-                            if (result instanceof Object) {
-                                if (isJSON(result, true)) {
-                                    result = JSON.stringify(result);
-                                }
-                            }
-                            console.log(result);
-                        }).catch(reason => {
-                            process.exitCode = -1;
-
-                            if (reason instanceof Error) {
-                                console.error(chalk.red(reason.stack));
-                            } else {
-                                if (reason instanceof Object) {
-                                    if (isJSON(reason, true)) {
-                                        reason = JSON.stringify(reason);
-                                    }
-                                }
-                                console.error(chalk.red(reason));
-                            }
-                        });
-                    }
-                    else {
-                        console.log(ret);
-                    }
+module.exports.produceSubCommandInfo = function(subCommand, handler) {
+  let subCommandInfo = {
+    name: subCommand.name,
+    describe: subCommand.describe,
+    handler: argv => {
+      try {
+        let ret = handler(argv);
+        if (ret) {
+          if (ret instanceof Promise) {
+            ret
+              .then(result => {
+                if (result instanceof Object) {
+                  if (isJSON(result, true)) {
+                    result = JSON.stringify(result);
+                  }
                 }
-            } catch (error) {
+                console.log(result);
+              })
+              .catch(reason => {
                 process.exitCode = -1;
-                console.error(chalk.red(error.stack));
-            }
-        }
-    };
 
-    if (subCommand.args) {
-        subCommand.args.forEach((value, index) => {
-            value.options.describe = chalk.green(value.options.describe);
-            if (value.options.flags) {
-                if (index !== (subCommand.args.length - 1)) {
-                    console.error(chalk.red(`[ERROR]:register \`${subCommand.name}\` sub-command failed, ` +
-                        `variadic/optional parameter \`${value.name}\` must be at last position!`));
-                    process.exit(-1);
+                if (reason instanceof Error) {
+                  console.error(chalk.red(reason.stack));
+                } else {
+                  if (reason instanceof Object) {
+                    if (isJSON(reason, true)) {
+                      reason = JSON.stringify(reason);
+                    }
+                  }
+                  console.error(chalk.red(reason));
                 }
-            }
-        });
-        subCommandInfo.args = subCommand.args;
-    }
+              });
+          } else {
+            console.log(ret);
+          }
+        }
+      } catch (error) {
+        process.exitCode = -1;
+        console.error(chalk.red(error.stack));
+      }
+    },
+  };
 
-    return subCommandInfo;
+  if (subCommand.args) {
+    subCommand.args.forEach((value, index) => {
+      value.options.describe = chalk.green(value.options.describe);
+      if (value.options.flags) {
+        if (index !== subCommand.args.length - 1) {
+          console.error(
+            chalk.red(
+              `[ERROR]:register \`${subCommand.name}\` sub-command failed, ` +
+                `variadic/optional parameter \`${value.name}\` must be at last position!`,
+            ),
+          );
+          process.exit(-1);
+        }
+      }
+    });
+    subCommandInfo.args = subCommand.args;
+  }
+
+  return subCommandInfo;
 };
 
 module.exports.FLAGS = {
-    OPTIONAL: 0x1,
-    VARIADIC: 0x2
+  OPTIONAL: 0x1,
+  VARIADIC: 0x2,
 };
 
-module.exports.getAbi = function (contractName) {
-    if (contractName.endsWith('.sol')) {
-        contractName = path.basename(contractName, '.sol');
-    }
+module.exports.getAbi = function(contractName) {
+  if (contractName.endsWith('.sol')) {
+    contractName = path.basename(contractName, '.sol');
+  }
 
-    let outputDir = ContractsOutputDir;
-    let abiPath = path.join(outputDir, `${contractName}.abi`);
+  let outputDir = ContractsOutputDir;
+  let abiPath = path.join(outputDir, `${contractName}.abi`);
 
-    if (!fs.existsSync(abiPath)) {
-        return null;
-    }
+  if (!fs.existsSync(abiPath)) {
+    return null;
+  }
 
-    return JSON.parse(fs.readFileSync(abiPath));
+  return JSON.parse(fs.readFileSync(abiPath));
 };

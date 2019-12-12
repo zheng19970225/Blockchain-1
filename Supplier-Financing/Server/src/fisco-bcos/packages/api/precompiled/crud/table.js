@@ -17,35 +17,35 @@
 const { check, string } = require('../../common/typeCheck');
 
 class Table {
-    constructor(tableName, key, valueFields, optional = '') {
-        check(Array.prototype.slice.call(arguments, 0, 3), string, string, string);
-        check(optional, string);
+  constructor(tableName, key, valueFields, optional = '') {
+    check(Array.prototype.slice.call(arguments, 0, 3), string, string, string);
+    check(optional, string);
 
-        this.tableName = tableName;
-        this.key = key;
-        this.valueFields = valueFields;
-        this.optional = optional;
-    }
+    this.tableName = tableName;
+    this.key = key;
+    this.valueFields = valueFields;
+    this.optional = optional;
+  }
 
-    setTableName(name) {
-        check(arguments, string);
-        this.tableName = name;
-    }
+  setTableName(name) {
+    check(arguments, string);
+    this.tableName = name;
+  }
 
-    setValueFields(valueFields) {
-        check(arguments, string);
-        this.valueFields = valueFields;
-    }
+  setValueFields(valueFields) {
+    check(arguments, string);
+    this.valueFields = valueFields;
+  }
 
-    setOptional(optional) {
-        check(arguments, string);
-        this.optional = optional;
-    }
+  setOptional(optional) {
+    check(arguments, string);
+    this.optional = optional;
+  }
 
-    setKey(value) {
-        check(arguments, string);
-        this.key = value;
-    }
+  setKey(value) {
+    check(arguments, string);
+    this.key = value;
+  }
 }
 
 module.exports.Table = Table;

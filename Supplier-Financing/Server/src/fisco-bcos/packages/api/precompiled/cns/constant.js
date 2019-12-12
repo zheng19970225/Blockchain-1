@@ -14,10 +14,43 @@
 
 'use strict';
 
-module.exports.CNS_PRECOMPILE_ADDRESS = "0x0000000000000000000000000000000000001004";
+module.exports.CNS_PRECOMPILE_ADDRESS =
+  '0x0000000000000000000000000000000000001004';
 module.exports.CNS_PRECOMPILE_ABI = {
-    'selectByName': { "constant": true, "inputs": [{ "name": "name", "type": "string" }], "name": "selectByName", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" },
-    'selectByNameAndVersion': { "constant": true, "inputs": [{ "name": "name", "type": "string" }, { "name": "version", "type": "string" }], "name": "selectByNameAndVersion", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" },
-    'insert': { "constant": false, "inputs": [{ "name": "name", "type": "string" }, { "name": "version", "type": "string" }, { "name": "addr", "type": "string" }, { "name": "abi", "type": "string" }], "name": "insert", "outputs": [{ "name": "", "type": "int256" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }
+  selectByName: {
+    constant: true,
+    inputs: [{ name: 'name', type: 'string' }],
+    name: 'selectByName',
+    outputs: [{ name: '', type: 'string' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  selectByNameAndVersion: {
+    constant: true,
+    inputs: [
+      { name: 'name', type: 'string' },
+      { name: 'version', type: 'string' },
+    ],
+    name: 'selectByNameAndVersion',
+    outputs: [{ name: '', type: 'string' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  insert: {
+    constant: false,
+    inputs: [
+      { name: 'name', type: 'string' },
+      { name: 'version', type: 'string' },
+      { name: 'addr', type: 'string' },
+      { name: 'abi', type: 'string' },
+    ],
+    name: 'insert',
+    outputs: [{ name: '', type: 'int256' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 };
 module.exports.ADDRESS_LENGTH_IN_HEX = 40;

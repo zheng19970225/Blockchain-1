@@ -14,7 +14,19 @@
 
 'use strict';
 
-module.exports.SYSTEM_CONFIG_PRECOMPILE_ADDRESS = '0x0000000000000000000000000000000000001000';
+module.exports.SYSTEM_CONFIG_PRECOMPILE_ADDRESS =
+  '0x0000000000000000000000000000000000001000';
 module.exports.SYSTEM_CONFIG_PRECOMPILE_ABI = {
-    'setValueByKey': {"constant":false,"inputs":[{"name":"key","type":"string"},{"name":"value","type":"string"}],"name":"setValueByKey","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"nonpayable","type":"function"}
+  setValueByKey: {
+    constant: false,
+    inputs: [
+      { name: 'key', type: 'string' },
+      { name: 'value', type: 'string' },
+    ],
+    name: 'setValueByKey',
+    outputs: [{ name: '', type: 'int256' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 };

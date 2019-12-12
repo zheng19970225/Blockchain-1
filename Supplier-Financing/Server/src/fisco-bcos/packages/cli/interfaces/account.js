@@ -14,22 +14,25 @@
 
 'use strict';
 
-const assert = require('assert')
+const assert = require('assert');
 const produceSubCommandInfo = require('./base').produceSubCommandInfo;
 const Configuration = require('../../api/common/configuration').Configuration;
 
 let interfaces = [];
 
-interfaces.push(produceSubCommandInfo(
+interfaces.push(
+  produceSubCommandInfo(
     {
-        name: 'showAccount',
-        describe: 'Show account which depends on private key provided in configuration'
+      name: 'showAccount',
+      describe:
+        'Show account which depends on private key provided in configuration',
     },
     () => {
-        let config = Configuration.getInstance();
-        assert(config.account, 'you need to set configuration first');
-        return Promise.resolve({ account: config.account });
-    }));
+      let config = Configuration.getInstance();
+      assert(config.account, 'you need to set configuration first');
+      return Promise.resolve({ account: config.account });
+    },
+  ),
+);
 
 module.exports.interfaces = interfaces;
-

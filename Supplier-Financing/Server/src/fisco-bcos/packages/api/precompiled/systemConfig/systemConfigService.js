@@ -22,26 +22,35 @@ const SeviceBase = require('../../common/serviceBase').ServiceBase;
 const Web3jService = require('../../web3j').Web3jService;
 
 class SystemConfigService extends SeviceBase {
-    constructor() {
-        super();
-        this.web3jService = new Web3jService();
-    }
+  constructor() {
+    super();
+    this.web3jService = new Web3jService();
+  }
 
-    resetConfig() {
-        super.resetConfig();
-        this.web3jService.resetConfig();
-    }
+  resetConfig() {
+    super.resetConfig();
+    this.web3jService.resetConfig();
+  }
 
-    async setValueByKey(key, value) {
-        check(arguments, string, string);
+  async setValueByKey(key, value) {
+    check(arguments, string, string);
 
-        let functionName = utils.spliceFunctionSignature(constant.SYSTEM_CONFIG_PRECOMPILE_ABI.setValueByKey);
-        let parameters = [key, value];
-        let receipt = await this.web3jService.sendRawTransaction(constant.SYSTEM_CONFIG_PRECOMPILE_ADDRESS, functionName, parameters);
+    let functionName = utils.spliceFunctionSignature(
+      constant.SYSTEM_CONFIG_PRECOMPILE_ABI.setValueByKey,
+    );
+    let parameters = [key, value];
+    let receipt = await this.web3jService.sendRawTransaction(
+      constant.SYSTEM_CONFIG_PRECOMPILE_ADDRESS,
+      functionName,
+      parameters,
+    );
 
-        let output = handleReceipt(receipt, constant.SYSTEM_CONFIG_PRECOMPILE_ABI.setValueByKey)[0];
-        return parseInt(output);
-    }
+    let output = handleReceipt(
+      receipt,
+      constant.SYSTEM_CONFIG_PRECOMPILE_ABI.setValueByKey,
+    )[0];
+    return parseInt(output);
+  }
 }
 
 module.exports.SystemConfigService = SystemConfigService;

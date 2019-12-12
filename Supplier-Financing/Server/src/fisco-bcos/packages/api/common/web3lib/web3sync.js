@@ -23,13 +23,13 @@ const Transaction = require('./transactionObject').Transaction;
  * @return {Number} random number
  */
 function genRandomID() {
-    let uuid = uuidv4();
-    uuid = uuid.replace(/-/g, '');
-    if (!uuid.startsWith('0x')) {
-        uuid = '0x' + uuid;
-    }
+  let uuid = uuidv4();
+  uuid = uuid.replace(/-/g, '');
+  if (!uuid.startsWith('0x')) {
+    uuid = '0x' + uuid;
+  }
 
-    return uuid;
+  return uuid;
 }
 
 /**
@@ -40,17 +40,17 @@ function genRandomID() {
  * @return {String} signed transaction data
  */
 function signTransaction(txData, privKey, callback) {
-    let tx = new Transaction(txData);
-    let privateKey = Buffer.from(privKey, 'hex');
-    tx.sign(privateKey);
+  let tx = new Transaction(txData);
+  let privateKey = Buffer.from(privKey, 'hex');
+  tx.sign(privateKey);
 
-    // Build a serialized hex version of the tx
-    let serializedTx = '0x' + tx.serialize().toString('hex');
-    if (callback !== null) {
-        callback(serializedTx);
-    } else {
-        return serializedTx;
-    }
+  // Build a serialized hex version of the tx
+  let serializedTx = '0x' + tx.serialize().toString('hex');
+  if (callback !== null) {
+    callback(serializedTx);
+  } else {
+    return serializedTx;
+  }
 }
 
 /**
@@ -60,12 +60,12 @@ function signTransaction(txData, privKey, callback) {
  * @return {String} transaction data
  */
 function getTxData(func, params) {
-    let r = /^\w+\((.*)\)$/g.exec(func);
-    let types = [];
-    if (r[1]) {
-        types = r[1].split(',');
-    }
-    return utils.encodeTxData(func, types, params);
+  let r = /^\w+\((.*)\)$/g.exec(func);
+  let types = [];
+  if (r[1]) {
+    types = r[1].split(',');
+  }
+  return utils.encodeTxData(func, types, params);
 }
 
 /**
@@ -80,21 +80,21 @@ function getTxData(func, params) {
  * @return {String} signed transaction data
  */
 function getSignTx(groupId, account, privateKey, to, func, params, blockLimit) {
-    let txData = getTxData(func, params);
+  let txData = getTxData(func, params);
 
-    let postdata = {
-        data: txData,
-        from: account,
-        to: to,
-        gas: 1000000,
-        randomid: genRandomID(),
-        blockLimit: blockLimit,
-        chainId: 1,
-        groupId: groupId,
-        extraData: '0x0'
-    };
+  let postdata = {
+    data: txData,
+    from: account,
+    to: to,
+    gas: 1000000,
+    randomid: genRandomID(),
+    blockLimit: blockLimit,
+    chainId: 1,
+    groupId: groupId,
+    extraData: '0x0',
+  };
 
-    return signTransaction(postdata, privateKey, null);
+  return signTransaction(postdata, privateKey, null);
 }
 
 /**
@@ -107,21 +107,21 @@ function getSignTx(groupId, account, privateKey, to, func, params, blockLimit) {
  * @return {String} signed deploy transaction data
  */
 function getSignDeployTx(groupId, account, privateKey, bin, blockLimit) {
-    let txData = bin.indexOf('0x') === 0 ? bin : ('0x' + bin);
+  let txData = bin.indexOf('0x') === 0 ? bin : '0x' + bin;
 
-    let postdata = {
-        data: txData,
-        from: account,
-        to: null,
-        gas: 1000000,
-        randomid: genRandomID(),
-        blockLimit: blockLimit,
-        chainId: 1,
-        groupId: groupId,
-        extraData: '0x0'
-    };
+  let postdata = {
+    data: txData,
+    from: account,
+    to: null,
+    gas: 1000000,
+    randomid: genRandomID(),
+    blockLimit: blockLimit,
+    chainId: 1,
+    groupId: groupId,
+    extraData: '0x0',
+  };
 
-    return signTransaction(postdata, privateKey, null);
+  return signTransaction(postdata, privateKey, null);
 }
 
 module.exports.getSignDeployTx = getSignDeployTx;

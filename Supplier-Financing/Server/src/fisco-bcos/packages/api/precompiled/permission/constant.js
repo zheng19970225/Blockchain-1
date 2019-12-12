@@ -14,9 +14,40 @@
 
 'use strict';
 
-module.exports.PERMISSION_PRECOMPILE_ADDRESS = "0x0000000000000000000000000000000000001005";
+module.exports.PERMISSION_PRECOMPILE_ADDRESS =
+  '0x0000000000000000000000000000000000001005';
 module.exports.PERMISSION_PRECOMPILE_ABI = {
-    'insert': { "constant": false, "inputs": [{ "name": "table_name", "type": "string" }, { "name": "addr", "type": "string" }], "name": "insert", "outputs": [{ "name": "", "type": "int256" }], "payable": false, "stateMutability": "nonpayable", "type": "function" },
-    'queryByName': { "constant": true, "inputs": [{ "name": "table_name", "type": "string" }], "name": "queryByName", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" },
-    'remove': { "constant": false, "inputs": [{ "name": "table_name", "type": "string" }, { "name": "addr", "type": "string" }], "name": "remove", "outputs": [{ "name": "", "type": "int256" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }
+  insert: {
+    constant: false,
+    inputs: [
+      { name: 'table_name', type: 'string' },
+      { name: 'addr', type: 'string' },
+    ],
+    name: 'insert',
+    outputs: [{ name: '', type: 'int256' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  queryByName: {
+    constant: true,
+    inputs: [{ name: 'table_name', type: 'string' }],
+    name: 'queryByName',
+    outputs: [{ name: '', type: 'string' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  remove: {
+    constant: false,
+    inputs: [
+      { name: 'table_name', type: 'string' },
+      { name: 'addr', type: 'string' },
+    ],
+    name: 'remove',
+    outputs: [{ name: '', type: 'int256' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 };

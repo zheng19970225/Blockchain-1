@@ -17,27 +17,27 @@
 const Configuration = require('../common/configuration').Configuration;
 
 class ServiceBase {
-    constructor() {
-        this._config = undefined;
+  constructor() {
+    this._config = undefined;
 
-        Object.defineProperty(this, 'config', {
-            enumerable: true,
-            configurable: false,
-            get: () => {
-                if (!this._config) {
-                    this._config = Configuration.getInstance();
-                }
-                return this._config;
-            },
-            set: (config) => {
-                this._config = config;
-            }
-        });
-    }
+    Object.defineProperty(this, 'config', {
+      enumerable: true,
+      configurable: false,
+      get: () => {
+        if (!this._config) {
+          this._config = Configuration.getInstance();
+        }
+        return this._config;
+      },
+      set: config => {
+        this._config = config;
+      },
+    });
+  }
 
-    resetConfig() {
-        this.config = Configuration.getInstance();
-    }
+  resetConfig() {
+    this.config = Configuration.getInstance();
+  }
 }
 
 module.exports.ServiceBase = ServiceBase;

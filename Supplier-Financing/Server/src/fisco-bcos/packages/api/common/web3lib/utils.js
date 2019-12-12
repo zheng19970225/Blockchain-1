@@ -29,26 +29,29 @@ const encryptType = require('./config').EncryptType;
  * @return {Buffer} transformation result
  */
 function toBuffer(data) {
-    if (!Buffer.isBuffer(data)) {
-        if (Array.isArray(data)) {
-            data = Buffer.from(data);
-        } else if (typeof data === 'string') {
-            if (ethjsUtil.isHexPrefixed(data)) {
-                data = Buffer.from(ethjsUtil.padToEven(ethjsUtil.stripHexPrefix(data)), 'hex');
-            } else {
-                data = Buffer.from(data, 'hex');
-            }
-        } else if (Number.isInteger(data)) {
-            data = ethjsUtil.intToBuffer(data);
-        } else if (data === null || data === undefined) {
-            data = Buffer.allocUnsafe(0);
-        } else if (data.toArray) {
-            data = Buffer.from(data.toArray());
-        } else {
-            throw new Error('invalid type');
-        }
+  if (!Buffer.isBuffer(data)) {
+    if (Array.isArray(data)) {
+      data = Buffer.from(data);
+    } else if (typeof data === 'string') {
+      if (ethjsUtil.isHexPrefixed(data)) {
+        data = Buffer.from(
+          ethjsUtil.padToEven(ethjsUtil.stripHexPrefix(data)),
+          'hex',
+        );
+      } else {
+        data = Buffer.from(data, 'hex');
+      }
+    } else if (Number.isInteger(data)) {
+      data = ethjsUtil.intToBuffer(data);
+    } else if (data === null || data === undefined) {
+      data = Buffer.allocUnsafe(0);
+    } else if (data.toArray) {
+      data = Buffer.from(data.toArray());
+    } else {
+      throw new Error('invalid type');
     }
-    return data;
+  }
+  return data;
 }
 
 /**
@@ -58,16 +61,18 @@ function toBuffer(data) {
  * @return {Buffer} hash of data
  */
 function sha3(data, bits) {
-    if (encryptType === 0) {
-        data = toBuffer(data);
-        if (!bits) {
-            bits = 256;
-        }
-        let digestData = keccak('keccak' + bits).update(data).digest();
-        return digestData;
-    } else {
-        throw new Error('Unsupported type of encryption');
+  if (encryptType === 0) {
+    data = toBuffer(data);
+    if (!bits) {
+      bits = 256;
     }
+    let digestData = keccak('keccak' + bits)
+      .update(data)
+      .digest();
+    return digestData;
+  } else {
+    throw new Error('Unsupported type of encryption');
+  }
 }
 
 /**
@@ -76,13 +81,13 @@ function sha3(data, bits) {
  * @return {Buffer} public key
  */
 function privateKeyToPublicKey(privateKey) {
-    if (encryptType === 0) {
-        privateKey = toBuffer(privateKey);
-        let publicKey = secp256k1.publicKeyCreate(privateKey, false).slice(1);
-        return publicKey;
-    } else {
-        throw new Error('Unsupported type of encryption');
-    }
+  if (encryptType === 0) {
+    privateKey = toBuffer(privateKey);
+    let publicKey = secp256k1.publicKeyCreate(privateKey, false).slice(1);
+    return publicKey;
+  } else {
+    throw new Error('Unsupported type of encryption');
+  }
 }
 
 /**
@@ -92,14 +97,14 @@ function privateKeyToPublicKey(privateKey) {
  * @return {Buffer} address
  */
 function publicKeyToAddress(publicKey, sanitize = false) {
-    if (encryptType === 0) {
-        if (sanitize && (publicKey.length !== 64)) {
-            publicKey = secp256k1.publicKeyConvert(publicKey, false).slice(1);
-        }
-        assert(publicKey.length === 64);
+  if (encryptType === 0) {
+    if (sanitize && publicKey.length !== 64) {
+      publicKey = secp256k1.publicKeyConvert(publicKey, false).slice(1);
     }
-    // Only take the lower 160bits of the hash as address
-    return sha3(publicKey).slice(-20);
+    assert(publicKey.length === 64);
+  }
+  // Only take the lower 160bits of the hash as address
+  return sha3(publicKey).slice(-20);
 }
 
 /**
@@ -108,7 +113,7 @@ function publicKeyToAddress(publicKey, sanitize = false) {
  * @return {Buffer} address
  */
 function privateKeyToAddress(privateKey) {
-    return publicKeyToAddress(privateKeyToPublicKey(privateKey));
+  return publicKeyToAddress(privateKeyToPublicKey(privateKey));
 }
 
 /**
@@ -117,25 +122,25 @@ function privateKeyToAddress(privateKey) {
  * @return {Buffer} buffer
  */
 function zeros(length) {
-    return Buffer.allocUnsafe(length).fill(0);
+  return Buffer.allocUnsafe(length).fill(0);
 }
 
 function setLength(msg, length, right) {
-    let buf = zeros(length);
-    msg = toBuffer(msg);
-    if (right) {
-        if (msg.length < length) {
-            msg.copy(buf);
-            return buf;
-        }
-        return msg.slice(0, length);
-    } else {
-        if (msg.length < length) {
-            msg.copy(buf, length - msg.length);
-            return buf;
-        }
-        return msg.slice(-length);
+  let buf = zeros(length);
+  msg = toBuffer(msg);
+  if (right) {
+    if (msg.length < length) {
+      msg.copy(buf);
+      return buf;
     }
+    return msg.slice(0, length);
+  } else {
+    if (msg.length < length) {
+      msg.copy(buf, length - msg.length);
+      return buf;
+    }
+    return msg.slice(-length);
+  }
 }
 
 /**
@@ -147,13 +152,13 @@ function setLength(msg, length, right) {
  * @return {String} public key recovered from (v, r, s)
  */
 function ecrecover(msgHash, v, r, s) {
-    let signature = Buffer.concat([setLength(r, 32), setLength(s, 32)], 64);
-    let recovery = v - 27;
-    if (recovery !== 0 && recovery !== 1) {
-        throw new Error('Invalid signature v value');
-    }
-    let senderPubickKey = secp256k1.recover(msgHash, signature, recovery);
-    return secp256k1.publicKeyConvert(senderPubickKey, false).slice(1);
+  let signature = Buffer.concat([setLength(r, 32), setLength(s, 32)], 64);
+  let recovery = v - 27;
+  if (recovery !== 0 && recovery !== 1) {
+    throw new Error('Invalid signature v value');
+  }
+  let senderPubickKey = secp256k1.recover(msgHash, signature, recovery);
+  return secp256k1.publicKeyConvert(senderPubickKey, false).slice(1);
 }
 
 /**
@@ -163,16 +168,16 @@ function ecrecover(msgHash, v, r, s) {
  * @return {Object} returns (v, r, s) for secp256k1
  */
 function ecsign(msgHash, privateKey) {
-    let ret = {};
-    if (encryptType === 0) {
-        let sig = secp256k1.sign(msgHash, privateKey);
-        ret.r = sig.signature.slice(0, 32);
-        ret.s = sig.signature.slice(32, 64);
-        ret.v = sig.recovery + 27;
-    } else {
-        throw new Error('Unsupported type of encryption');
-    }
-    return ret;
+  let ret = {};
+  if (encryptType === 0) {
+    let sig = secp256k1.sign(msgHash, privateKey);
+    ret.r = sig.signature.slice(0, 32);
+    ret.s = sig.signature.slice(32, 64);
+    ret.v = sig.recovery + 27;
+  } else {
+    throw new Error('Unsupported type of encryption');
+  }
+  return ret;
 }
 
 /**
@@ -181,7 +186,7 @@ function ecsign(msgHash, privateKey) {
  * @return {String} the hash of data
  */
 function rlphash(data) {
-    return sha3(rlp.encode(data));
+  return sha3(rlp.encode(data));
 }
 
 /**
@@ -191,8 +196,8 @@ function rlphash(data) {
  * @return {Buffer} params' code
  */
 function encodeParams(types, params) {
-    let ret = coder.encodeParameters(types, params);
-    return ret;
+  let ret = coder.encodeParameters(types, params);
+  return ret;
 }
 
 /**
@@ -202,8 +207,8 @@ function encodeParams(types, params) {
  * @return {Array} params
  */
 function decodeParams(types, bytes) {
-    let ret = coder.decodeParameters(types, bytes);
-    return ret;
+  let ret = coder.decodeParameters(types, bytes);
+  return ret;
 }
 
 /**
@@ -212,16 +217,16 @@ function decodeParams(types, bytes) {
  * @return {Buffer} function name's code
  */
 function encodeFunctionName(fcn) {
-    let digest = null;
-    if (encryptType === 1) {
-        digest = sha3(fcn, 256).toString('hex');
-    } else {
-        digest = cryptoJSSha3(fcn, {
-            outputLength: 256
-        }).toString();
-    }
-    let ret = '0x' + digest.slice(0, 8);
-    return ret;
+  let digest = null;
+  if (encryptType === 1) {
+    digest = sha3(fcn, 256).toString('hex');
+  } else {
+    digest = cryptoJSSha3(fcn, {
+      outputLength: 256,
+    }).toString();
+  }
+  let ret = '0x' + digest.slice(0, 8);
+  return ret;
 }
 
 /**
@@ -232,10 +237,10 @@ function encodeFunctionName(fcn) {
  * @return {Buffer} tx data's code
  */
 function encodeTxData(fcn, types, params) {
-    let txDataCode = encodeFunctionName(fcn);
-    let paramsCode = encodeParams(types, params);
-    txDataCode += ethjsUtil.stripHexPrefix(paramsCode);
-    return txDataCode;
+  let txDataCode = encodeFunctionName(fcn);
+  let paramsCode = encodeParams(types, params);
+  txDataCode += ethjsUtil.stripHexPrefix(paramsCode);
+  return txDataCode;
 }
 
 module.exports.privateKeyToPublicKey = privateKeyToPublicKey;
