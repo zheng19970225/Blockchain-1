@@ -1,4 +1,4 @@
-import { IsString, Length } from 'class-validator';
+import { IsNotEmpty, IsString, Length } from 'class-validator';
 import { AppCode, Response } from '../core/core.enum';
 import { User } from '../models/user.model.mysql';
 
@@ -31,6 +31,14 @@ export class RequestRegister {
   @IsString()
   @Length(6, 128)
   public password: string;
+
+  @IsString()
+  @Length(42, 42)
+  public publicKey: string;
+
+  @IsString()
+  @IsNotEmpty()
+  public privateKey: string;
 }
 
 /**

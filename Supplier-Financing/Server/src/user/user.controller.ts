@@ -39,12 +39,13 @@ export class UserController {
   @Authenticated()
   @IsAdminBank()
   public async registerBank(@Body() dto: RequestRegister) {
-    const { uscc, address, password } = dto;
     const user = await this.userService.register(
-      uscc,
-      address,
-      password,
+      dto.uscc,
+      dto.address,
+      dto.password,
       UserType.BANK,
+      dto.publicKey,
+      dto.privateKey,
     );
     return new ResponseRegister(user);
   }
@@ -57,12 +58,13 @@ export class UserController {
   @Authenticated()
   @IsBank()
   public async registerCompany(@Body() dto: RequestRegister) {
-    const { uscc, address, password } = dto;
     const user = await this.userService.register(
-      uscc,
-      address,
-      password,
+      dto.uscc,
+      dto.address,
+      dto.password,
       UserType.COMPANY,
+      dto.publicKey,
+      dto.privateKey,
     );
     return new ResponseRegister(user);
   }
