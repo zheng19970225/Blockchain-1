@@ -36,6 +36,10 @@ export enum AppCode {
    * 密码错误
    */
   USER_PASSWORD_EXCEPTION = 3,
+  /**
+   * 发送交易错误
+   */
+  SEND_TRANSACTION_EXCEPTION = 4,
 }
 
 /**
@@ -50,6 +54,8 @@ export function formatAppCode(sub: AppCode): string {
       return formatMessage({ id: 'error.USER_NOT_EXIST_EXCEPTION' });
     case AppCode.USER_PASSWORD_EXCEPTION:
       return formatMessage({ id: 'error.USER_PASSWORD_EXCEPTION' });
+    case AppCode.SEND_TRANSACTION_EXCEPTION:
+      return formatMessage({ id: 'error.SEND_TRANSACTION_EXCEPTION' });
     default:
       return formatMessage({ id: 'error.UNKNOWN' });
   }

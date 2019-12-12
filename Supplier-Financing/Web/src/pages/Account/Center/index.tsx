@@ -1,8 +1,9 @@
 import GridContent from '@/components/GridContent';
 import ConnectState, { ConnectProps } from '@/models/connect';
-import { CurrentUser, UserType, formatUserType, formatUserTypeMessage } from '@/models/user';
+import { CurrentUser, formatUserTypeMessage } from '@/models/user';
+import { TotalReceipts } from '@/pages/Receipt/TotalReceipts';
 import { disabledStyle, formItemLayout } from '@/utils/form';
-import { Card, Form, Input, Select } from 'antd';
+import { Card, Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/es/form/Form';
 import { connect } from 'dva';
 import React from 'react';
@@ -23,7 +24,9 @@ interface AccountCenterState {}
 class AccountCenter extends React.Component<AccountCenterProps, AccountCenterState> {
   state: AccountCenterState = {};
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.dispatch!({ type: 'user/fetchCurrentUser' });
+  }
 
   render() {
     const {
@@ -33,6 +36,7 @@ class AccountCenter extends React.Component<AccountCenterProps, AccountCenterSta
     } = this.props;
     return (
       <GridContent>
+        <TotalReceipts />
         <Card bordered={false} style={{ marginTop: 24 }} loading={loading}>
           <Form {...formItemLayout}>
             <Form.Item label={formatMessage({ id: 'account.uscc' })}>

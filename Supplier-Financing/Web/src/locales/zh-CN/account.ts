@@ -8,4 +8,6 @@ export default {
   'account.type.admin_bank': '中央银行',
   'account.type.bank': '银行',
   'account.type.company': '公司',
+  'account.inReceipts': '借入凭证总金额',
+  'account.outReceipts': '借出凭证总金额',
 };
