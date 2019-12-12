@@ -409,9 +409,9 @@ class Web3jService extends ServiceBase {
     }
 
     /**
-     *  用客户端的公钥和私钥发送交易。
+     *  用自定义的公钥和私钥发送交易。
      */
-    async sendRawTransactionUsingClientCredentials(account, privateKey, ...args) {
+    async sendRawTransactionUsingCustomCredentials(account, privateKey, ...args) {
         console.log(args.length, args[0])
         let node = utils.selectNode(this.config.nodes);
         if (args.length !== 3) {
@@ -428,15 +428,15 @@ class Web3jService extends ServiceBase {
             let params = args[2];
             let blockNumberResult = await this.getBlockNumber();
             let blockNumber = parseInt(blockNumberResult.result, '16');
-            let signTx = await this.rawTransactionUsingClientCredentials(account, privateKey, to, func, params, blockNumber + 500);
-            return this.sendRawTransactionUsingClientCredentials(account,privateKey,signTx);
+            let signTx = await this.rawTransactionUsingCustomCredentials(account, privateKey, to, func, params, blockNumber + 500);
+            return this.sendRawTransactionUsingCustomCredentials(account,privateKey,signTx);
         }
     }
 
     /**
-     * 用客户端的公钥和私钥组装交易数据。
+     * 使用自定义公钥和私钥组装交易数据。
      */
-    async rawTransactionUsingClientCredentials(account, privateKey, to, func, params, blockLimit) {
+    async rawTransactionUsingCustomCredentials(account, privateKey, to, func, params, blockLimit) {
         if (!isArray(params)) {
             params = params ? [params] : [];
         }
