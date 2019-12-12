@@ -63,4 +63,8 @@ export enum AppCode {
    * 密码错误
    */
   USER_PASSWORD_EXCEPTION = 3,
+  /**
+   * 发送交易错误
+   */
+  SEND_TRANSACTION_EXCEPTION = 4,
 }

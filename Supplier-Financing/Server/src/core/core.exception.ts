@@ -11,11 +11,18 @@ import { AppCode } from './core.enum';
 export class AppException extends HttpException {
   public readonly sub: AppCode;
   public readonly msg: string | Object;
+  public readonly data?: any;
 
-  constructor(msg: string | Object, status: HttpStatus, sub: AppCode) {
+  constructor(
+    msg: string | Object,
+    status: HttpStatus,
+    sub: AppCode,
+    data?: any,
+  ) {
     super(msg, status);
     this.sub = sub;
     this.msg = msg;
+    this.data = data;
   }
 }
 
@@ -77,6 +84,20 @@ export class UnauthorizedException extends AppException {
       'Unauthorized Exception',
       HttpStatus.UNAUTHORIZED,
       AppCode.UNAUTHORIZED_EXCEPTION,
+    );
+  }
+}
+
+/**
+ * 发送交易异常
+ */
+export class SendTransactionException extends AppException {
+  constructor(data: any) {
+    super(
+      'Send Transaction Exception',
+      HttpStatus.INTERNAL_SERVER_ERROR,
+      AppCode.SEND_TRANSACTION_EXCEPTION,
+      data,
     );
   }
 }

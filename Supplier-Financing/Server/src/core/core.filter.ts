@@ -38,6 +38,7 @@ export class AppExceptionFilter implements ExceptionFilter {
         code: AppCode.FAILURE,
         sub: exception.sub,
         msg: exception.msg,
+        data: exception.data,
       });
       return;
     }
