@@ -408,6 +408,42 @@ class Web3jService extends ServiceBase {
         }
     }
 
+    /**
+     *  用客户端的公钥和私钥发送交易。
+     */
+    async sendRawTransactionUsingClientCredentials(account, privateKey, ...args) {
+        console.log(args.length, args[0])
+        let node = utils.selectNode(this.config.nodes);
+        if (args.length !== 3) {
+            let requestData = {
+                'jsonrpc': '2.0',
+                'method': 'sendRawTransaction',
+                'params': [this.config.groupID, args[0]],
+                'id': 1
+            };
+            return channelPromise(node, this.config.authentication, requestData, this.config.timeout);
+        } else {
+            let to = args[0];
+            let func = args[1];
+            let params = args[2];
+            let blockNumberResult = await this.getBlockNumber();
+            let blockNumber = parseInt(blockNumberResult.result, '16');
+            let signTx = await this.rawTransactionUsingClientCredentials(account, privateKey, to, func, params, blockNumber + 500);
+            return this.sendRawTransactionUsingClientCredentials(account,privateKey,signTx);
+        }
+    }
+
+    /**
+     * 用客户端的公钥和私钥组装交易数据。
+     */
+    async rawTransactionUsingClientCredentials(account, privateKey, to, func, params, blockLimit) {
+        if (!isArray(params)) {
+            params = params ? [params] : [];
+        }
+        let signTx = web3Sync.getSignTx(this.config.groupID, account, privateKey, to, func, params, blockLimit);
+        return signTx;
+    }
+
     async deploy(contractPath, outputDir) {
         if (!fs.existsSync(outputDir)) {
             fs.mkdirSync(outputDir);
