@@ -8,6 +8,7 @@ import { FilterModule } from './core/core.filter';
 import { AuthGuard } from './core/core.guard';
 import { LoggerMiddleware, LoggerModule } from './core/core.logger';
 import { PipeModule } from './core/core.pipe';
+import { FiscoBcosModule } from './fisco-bcos/fisco-bcos.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -20,6 +21,7 @@ import { UserModule } from './user/user.module';
     DatabaseModule,
     AuthModule,
     UserModule,
+    FiscoBcosModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: AuthGuard }],
 })
