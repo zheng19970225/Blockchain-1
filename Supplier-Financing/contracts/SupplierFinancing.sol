@@ -112,8 +112,8 @@ contract SupplierFinancing {
     function insertReceipt(string tableName, string key, address debtor, address debtee, int receiptId, int amount, int deadline) private {
         Table t_receipt = openTable(tableName);
         Entry entry = t_receipt.newEntry();
-        entry.set("debtor", debtor);
-        entry.set("debtee", debtee);
+        entry.set("debtor", toString(debtor));
+        entry.set("debtee", toString(debtee));
         entry.set("receiptId", receiptId);
         entry.set("amount", amount);
         entry.set("deadline", deadline);
