@@ -14,33 +14,13 @@ contract SupplierFinancing {
     // 信用凭证销毁事件
     event ReturnEvent(address from, address to, int256 amount);
 
-    // 数据库表版本号
-    string suffix;
-    function concat(string _base, string _value) internal returns (string) {
-        bytes memory _baseBytes = bytes(_base);
-        bytes memory _valueBytes = bytes(_value);
-        string memory _tmpValue = new string(_baseBytes.length + _valueBytes.length);
-        bytes memory _newValue = bytes(_tmpValue);
-        uint i;
-        uint j;
-        for (i = 0; i <_baseBytes.length; i++) {
-            _newValue[j++] = _baseBytes[i];
-        }
-        for (i = 0; i < _valueBytes.length; i++) {
-            _newValue[j++] = _valueBytes[i];
-        }
-        return string(_newValue);
-    }
-
-    constructor(address _adminAddr, string uscc, string _suffix) {
-        suffix = _suffix;
-
+    constructor(address _adminAddr, string uscc) {
         adminAddr = _adminAddr;
         // 创建表。
         TableFactory tf = TableFactory(0x1001);
-        tf.createTable(concat("t_company", suffix), "addr", "uscc,type,in_receipts,out_receipts");
-        tf.createTable(concat("t_in_receipt", suffix), "debtee", "debtor,debtee,receiptId,amount,deadline");
-        tf.createTable(concat("t_out_receipt", suffix), "debtor", "debtor,debtee,receiptId,amount,deadline");
+        tf.createTable("t_company", "addr", "uscc,type,in_receipts,out_receipts");
+        tf.createTable("t_in_receipt", "debtee", "debtor,debtee,receiptId,amount,deadline");
+        tf.createTable("t_out_receipt", "debtor", "debtor,debtee,receiptId,amount,deadline");
         // 插入央行数据。
         insertCompany(adminAddr, uscc, 1, 10000000000000000000, 0);
     }
@@ -48,7 +28,7 @@ contract SupplierFinancing {
     // 打开指定名称的 AMDB 表。
     function openTable(string tableName) private returns(Table) {
         TableFactory tf = TableFactory(0x1001);
-        return tf.openTable(concat(tableName, suffix));
+        return tf.openTable(tableName);
     }
 
     // 根据 addr 获取公司信息。
