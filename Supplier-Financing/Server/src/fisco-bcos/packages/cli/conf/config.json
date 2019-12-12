@@ -1,7 +1,7 @@
 {
   "privateKey": {
     "type": "pem",
-    "value": "./0x144d5ca47de35194b019b6f11a56028b964585c9.pem"
+    "value": "../../../config/0x144d5ca47de35194b019b6f11a56028b964585c9.pem"
   },
   "nodes": [
     {
@@ -10,9 +10,9 @@
     }
   ],
   "authentication": {
-    "key": "../../../authentication/node.key",
-    "cert": "../../../authentication/node.crt",
-    "ca": "../../../authentication/ca.crt"
+    "key": "../../../config/node.key",
+    "cert": "../../../config/node.crt",
+    "ca": "../../../config/ca.crt"
   },
   "groupID": 1,
   "timeout": 10000
