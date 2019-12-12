@@ -142,7 +142,7 @@ function decodePem(pem: string): string {
  * @param raw PEM 文件文本内容
  */
 export function getPrivateKey(raw: string): string {
-  const encodedPem = new Buffer(raw);
+  const encodedPem = Buffer.from(raw);
   const decodedPem = (PEM.decode(encodedPem) as Buffer).toString('hex');
   return decodePem(decodedPem);
 }
@@ -213,32 +213,3 @@ export function sendRawTransactionUsingCustomCredentials(
       .catch(reject);
   });
 }
-
-async function test() {
-  const publicKey = '0xa02e687623e4252f98b33b05349d07b04d8488a5';
-  const privateKey = `
------BEGIN PRIVATE KEY-----
-MIGEAgEAMBAGByqGSM49AgEGBSuBBAAKBG0wawIBAQQgnvzCBz8rK3zVLmdDerJw
-Kq+RKzdW+oW2htIVAtKSGKOhRANCAAQR0pn5nsY/uYcKXEKRmunPhSzd5OT0uxb6
-w+tP6aZkOtmmk0IKspq2/Gq9uh10OGnpbNWSsIbKl/0brC/m4XhL
------END PRIVATE KEY-----
-`;
-  const func = 'transferCredit';
-  const params = ['0x4c2d153d4726a9a3b8b5a66d5d81cd37b780b8f1', 500, 1];
-
-  try {
-    const ret = await sendRawTransactionUsingCustomCredentials(
-      CONTRACT_ADDRESS,
-      CONTRACT_ABI,
-      publicKey,
-      getPrivateKey(privateKey),
-      func,
-      params,
-    );
-    console.log(ret);
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-test();
