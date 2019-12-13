@@ -90,7 +90,22 @@ export const routes: Route[] = [
         name: 'account',
         icon: 'user',
         authority: ['admin_bank', 'bank', 'company'],
-        component: './Account/Center',
+        routes: [
+          {
+            path: '/account/center',
+            name: 'center',
+            icon: 'profile',
+            authority: ['admin_bank', 'bank', 'company'],
+            component: './Account/Center',
+          },
+          {
+            path: '/account/all',
+            name: 'all',
+            icon: 'compass',
+            authority: ['admin_bank', 'bank', 'company'],
+            component: './Account/All',
+          },
+        ],
       },
       // 异常页面路由
       {

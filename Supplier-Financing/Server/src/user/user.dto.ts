@@ -79,7 +79,7 @@ export class RequestGetAllUsers {
  * 获取所有账户信息响应
  */
 export class ResponseGetAllUsers extends Response {
-  constructor(data: User[]) {
+  constructor(data: { list: User[]; total: number; next: number }) {
     super(AppCode.SUCCESS, data);
   }
 }

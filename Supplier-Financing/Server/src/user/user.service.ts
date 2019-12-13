@@ -8,6 +8,7 @@ import {
 import { PinoLoggerService } from '../core/core.logger';
 import { FiscoBcosService } from '../fisco-bcos/fisco-bcos.service';
 import { User } from '../models/user.model.mysql';
+import { pagination } from '../utils';
 
 /**
  * 用户类型。
@@ -119,10 +120,13 @@ export class UserService {
    * @param pageSize 页数据大小
    */
   public async getAllUsers(offset: number = 0, pageSize: number = 20) {
-    return this.mysql.users.find({
-      select: ['uscc', 'address', 'type'],
-      skip: offset,
-      take: pageSize,
-    });
+    const newOffset = offset === -1 ? 0 : offset;
+    const users = await this.mysql.users.find();
+    const list = offset === -1 ? users : pagination(users, offset, pageSize);
+    return {
+      list,
+      total: users.length,
+      next: newOffset + list.length,
+    };
   }
 }

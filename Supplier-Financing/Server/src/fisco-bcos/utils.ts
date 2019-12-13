@@ -12,7 +12,7 @@ Configuration.setConfig(path.join(__dirname, './config/config.json'));
 const web3jService = new Web3jService();
 
 // 智能合约部署地址。
-export const CONTRACT_ADDRESS = '0x227fd0df9551102e7f2a14607bf5fe3c21289c18';
+export const CONTRACT_ADDRESS = '0xda0b438ae7993dc90feb95cf24c58e6d76033aaf';
 // 智能合约 ABI 定义。
 export const CONTRACT_ABI = [
   {
@@ -225,10 +225,19 @@ export type TCondition = {
   eq(key: string, value: string): void;
 };
 
+/**
+ * 创建查询条件。
+ */
 export function newCondtion(): TCondition {
   return new Condition();
 }
 
+/**
+ * 数据查询。
+ * @param tableName 数据表名称
+ * @param key 键名称
+ * @param condition 查询条件
+ */
 export function select(
   tableName: string,
   key: string,

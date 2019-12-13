@@ -9,6 +9,7 @@ export default {
   'menu.receipt.return': '归还凭证',
   'menu.account': '账户',
   'menu.account.center': '账户信息',
+  'menu.account.all': '账户公示',
   'menu.account.logout': '退出登录',
   'menu.exception': '异常',
   'menu.exception.forbidden': '403',
