@@ -1,8 +1,13 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { Authenticated, ReqUser } from '../core/core.decorator';
 import { PinoLoggerService } from '../core/core.logger';
 import { User } from '../models/user.model.mysql';
-import { ResponseDetailReceipts, ResponseTotalReceipts } from './receipt.dto';
+import {
+  RequestTransferReceipt,
+  ResponseDetailReceipts,
+  ResponseTotalReceipts,
+  ResponseTransferReceipt,
+} from './receipt.dto';
 import { ReceiptService } from './receipt.service';
 
 @Controller('receipt')
@@ -32,5 +37,18 @@ export class ReceiptController {
   public async getOutReceipts(@ReqUser() user: User) {
     const data = await this.receiptService.selectOutReceipts(user.address);
     return new ResponseDetailReceipts(data);
+  }
+
+  // 转移信用凭证。
+  @Post('/transfer')
+  public async transferReceipt(@Body() dto: RequestTransferReceipt) {
+    await this.receiptService.transferReceipt(
+      dto.publicKey,
+      dto.privateKey,
+      dto.debtee,
+      dto.amount,
+      dto.deadline,
+    );
+    return new ResponseTransferReceipt();
   }
 }

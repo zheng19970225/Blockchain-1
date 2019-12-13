@@ -25,13 +25,13 @@ export function TotalReceipts() {
       <ChartCard
         loading={loading}
         title={formatMessage({ id: 'account.inReceipts' })}
-        total={formatCurrency(parseFloat(receipts.inReceipts))}
+        total={formatCurrency(parseInt(receipts.inReceipts) / 100)}
       />
       <ChartCard
         loading={loading}
         style={{ marginTop: 24 }}
         title={formatMessage({ id: 'account.outReceipts' })}
-        total={formatCurrency(parseFloat(receipts.outReceipts))}
+        total={formatCurrency(parseInt(receipts.outReceipts) / 100)}
       />
     </>
   );

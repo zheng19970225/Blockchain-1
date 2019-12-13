@@ -1,5 +1,12 @@
 import { Transform } from 'class-transformer';
-import { IsInt, IsOptional, IsPositive } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsPositive,
+  IsString,
+  Length,
+} from 'class-validator';
 import { AppCode, Response } from '../core/core.enum';
 import { Receipt } from './receipt.service';
 
@@ -39,5 +46,39 @@ export class RequestDetailReceipts {
 export class ResponseDetailReceipts extends Response {
   constructor(data: { list: Receipt[]; total: number; next: number }) {
     super(AppCode.SUCCESS, data);
+  }
+}
+
+/**
+ * 转移信用凭证请求
+ */
+export class RequestTransferReceipt {
+  @IsString()
+  @Length(42, 42)
+  public debtee: string;
+
+  @IsInt()
+  @IsPositive()
+  public amount: number;
+
+  @IsInt()
+  @IsPositive()
+  public deadline: number;
+
+  @IsString()
+  @Length(42, 42)
+  public publicKey: string;
+
+  @IsString()
+  @IsNotEmpty()
+  public privateKey: string;
+}
+
+/**
+ * 转移信用凭证响应
+ */
+export class ResponseTransferReceipt extends Response {
+  constructor() {
+    super(AppCode.SUCCESS, 'Success');
   }
 }

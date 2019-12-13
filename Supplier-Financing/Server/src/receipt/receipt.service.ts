@@ -1,5 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserNotExistException } from '../core/core.exception';
+import {
+  SendTransactionException,
+  UserNotExistException,
+} from '../core/core.exception';
 import { PinoLoggerService } from '../core/core.logger';
 import { FiscoBcosService } from '../fisco-bcos/fisco-bcos.service';
 import { pagination } from '../utils';
@@ -83,5 +86,32 @@ export class ReceiptService {
     const list: Receipt[] =
       offset === -1 ? receipts : pagination(receipts, offset, pageSize);
     return { list, total: receipts.length, next: newOffset + list.length };
+  }
+
+  /**
+   * 转移信用凭证。
+   * @param publicKey debtor 公钥地址
+   * @param privateKey debtor 私钥内容
+   * @param to debtee 公钥地址
+   * @param amount 凭据金额，以分作单位
+   * @param deadline 截止日期
+   */
+  public async transferReceipt(
+    publicKey: string,
+    privateKey: string,
+    to: string,
+    amount: number,
+    deadline: number,
+  ) {
+    const ret = await this.blockchain.sendTransaction(
+      publicKey,
+      privateKey,
+      'transferCredit',
+      [to, amount, deadline],
+    );
+    // 交易失败。
+    if (ret.status !== '0x0') {
+      throw new SendTransactionException(ret);
+    }
   }
 }

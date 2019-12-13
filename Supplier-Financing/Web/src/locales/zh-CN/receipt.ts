@@ -4,6 +4,6 @@ export default {
   'receipt.receiptId': '凭据标识',
   'receipt.debtor': '凭据接收者',
   'receipt.debtee': '凭据签发者',
-  'receipt.amount': '凭据金额',
+  'receipt.amount': '凭据金额（元）',
   'receipt.deadline': '截止日期',
 };

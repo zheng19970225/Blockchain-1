@@ -6,6 +6,7 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import { doGetDetailReceipts, ResponseGetDetailReceipts } from './services';
 import { TotalReceipts } from './TotalReceipts';
 import { ColumnProps } from 'antd/lib/table';
+import { formatCurrency } from '@/utils/utils';
 
 const { TabPane } = Tabs;
 
@@ -35,10 +36,12 @@ const columns: ColumnProps<Receipt>[] = [
   {
     title: formatMessage({ id: 'receipt.amount' }),
     dataIndex: 'amount',
+    render: (amount: string) => formatCurrency(parseInt(amount) / 100),
   },
   {
     title: formatMessage({ id: 'receipt.deadline' }),
     dataIndex: 'deadline',
+    render: (deadline: string) => new Date(parseInt(deadline) * 1000).toUTCString(),
   },
 ];
 
@@ -46,7 +49,7 @@ function DetailReceipt(props: { type: 'in' | 'out' }) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({} as Pick<ResponseGetDetailReceipts, 'data'>['data']);
 
-  const PAGE_SIZE = 20;
+  const PAGE_SIZE = 5;
 
   useEffect(() => {
     // 获取全量数据（不分页）。
@@ -66,6 +69,11 @@ function DetailReceipt(props: { type: 'in' | 'out' }) {
       });
   }, []);
 
+  // 隐藏列。
+  // 借入凭证：显示凭证签发者。
+  // 借出凭证：显示凭证接收者。
+  const cols = [...columns];
+  cols.splice(props.type === 'in' ? 2 : 1, 1);
   const rowKey = (record: Receipt, index: number) => {
     return record.receiptId + '';
   };
@@ -74,13 +82,13 @@ function DetailReceipt(props: { type: 'in' | 'out' }) {
     <Table
       pagination={{
         total: data.total,
-        position: 'both',
+        position: 'bottom',
         pageSize: PAGE_SIZE,
       }}
       rowKey={rowKey}
       loading={loading}
       dataSource={data.list}
-      columns={columns}
+      columns={cols}
     />
   );
 }
