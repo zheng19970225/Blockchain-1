@@ -6,6 +6,7 @@ export default {
   'receipt.debtor': '凭据签发者',
   'receipt.amount': '凭据金额（元）',
   'receipt.deadline': '截止日期',
+
   'receipt.transfer.address': '接收者公钥地址',
   'receipt.transfer.address.placeholder': '请输入凭证接收者的公钥地址',
   'receipt.transfer.address.error': '请输入凭证接收者的公钥地址',
@@ -22,4 +23,18 @@ export default {
   'receipt.transfer.submit': '转移信用凭证',
   'receipt.transfer.success': '转移信用凭证成功',
   'receipt.transfer.failure': '转移信用凭证失败',
+
+  'receipt.return.receiptId': '归还凭证的标识',
+  'receipt.return.receiptId.placeholder': '请输入归还凭证的标识',
+  'receipt.return.receiptId.error': '请输入归还凭证的标识',
+  'receipt.return.amount': '归还金额（分）',
+  'receipt.return.amount.placeholder': '请输入归还的凭据金额（分）',
+  'receipt.return.amount.error': '请输入归还的凭据金额（分）',
+  'receipt.return.publicKey': '当前公钥地址',
+  'receipt.return.privateKey': '当前私钥内容',
+  'receipt.return.privateKey.placeholder': '请输入当前账户的私钥内容',
+  'receipt.return.privateKey.error': '请输入当前账户的私钥内容',
+  'receipt.return.submit': '归还信用凭证',
+  'receipt.return.success': '归还信用凭证成功',
+  'receipt.return.failure': '归还信用凭证失败',
 };

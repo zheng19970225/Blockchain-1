@@ -114,4 +114,29 @@ export class ReceiptService {
       throw new SendTransactionException(ret);
     }
   }
+
+  /**
+   * 归还信用凭证。
+   * @param publicKey 归还者 debtee 的公钥地址
+   * @param privateKey 归还者 debtee 的私钥内容
+   * @param receiptId 归还凭证标识
+   * @param amount 归还金额，以分作单位
+   */
+  public async returnReceipt(
+    publicKey: string,
+    privateKey: string,
+    receiptId: number,
+    amount: number,
+  ) {
+    const ret = await this.blockchain.sendTransaction(
+      publicKey,
+      privateKey,
+      'returnCredit',
+      [receiptId, amount],
+    );
+    // 交易失败。
+    if (ret.status !== '0x0') {
+      throw new SendTransactionException(ret);
+    }
+  }
 }

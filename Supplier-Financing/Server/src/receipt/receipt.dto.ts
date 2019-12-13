@@ -82,3 +82,33 @@ export class ResponseTransferReceipt extends Response {
     super(AppCode.SUCCESS, 'Success');
   }
 }
+
+/**
+ * 归还信用凭证请求
+ */
+export class RequestReturnReceipt {
+  @IsInt()
+  @IsPositive()
+  public receiptId: number;
+
+  @IsInt()
+  @IsPositive()
+  public amount: number;
+
+  @IsString()
+  @Length(42, 42)
+  public publicKey: string;
+
+  @IsString()
+  @IsNotEmpty()
+  public privateKey: string;
+}
+
+/**
+ * 归还信用凭证响应
+ */
+export class ResponseReturnReceipt extends Response {
+  constructor() {
+    super(AppCode.SUCCESS, 'Success');
+  }
+}

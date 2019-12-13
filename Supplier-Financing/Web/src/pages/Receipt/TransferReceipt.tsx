@@ -39,6 +39,7 @@ class TransferReceipt extends React.Component<TransferReceiptProps, TransferRece
             return;
           }
           message.success(formatMessage({ id: 'receipt.transfer.success' }));
+          router.replace('/receipt/detail');
         },
       );
     });

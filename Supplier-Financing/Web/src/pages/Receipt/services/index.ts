@@ -62,3 +62,28 @@ export function doTransferReceipt(
     },
   });
 }
+
+/**
+ * 归还信用凭证响应
+ */
+export interface ResponseReturnReceipt extends APIResponse {}
+
+/**
+ * 归还信用凭证。
+ */
+export function doReturnReceipt(
+  receiptId: number,
+  amount: number,
+  publicKey: string,
+  privateKey: string,
+) {
+  return request<ResponseTransferReceipt>('/receipt/return', {
+    method: 'POST',
+    data: {
+      receiptId,
+      amount,
+      publicKey,
+      privateKey,
+    },
+  });
+}

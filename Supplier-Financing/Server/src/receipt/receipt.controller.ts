@@ -3,8 +3,10 @@ import { Authenticated, ReqUser } from '../core/core.decorator';
 import { PinoLoggerService } from '../core/core.logger';
 import { User } from '../models/user.model.mysql';
 import {
+  RequestReturnReceipt,
   RequestTransferReceipt,
   ResponseDetailReceipts,
+  ResponseReturnReceipt,
   ResponseTotalReceipts,
   ResponseTransferReceipt,
 } from './receipt.dto';
@@ -50,5 +52,17 @@ export class ReceiptController {
       dto.deadline,
     );
     return new ResponseTransferReceipt();
+  }
+
+  // 归还信用凭证。
+  @Post('/return')
+  public async returnReceipt(@Body() dto: RequestReturnReceipt) {
+    await this.receiptService.returnReceipt(
+      dto.publicKey,
+      dto.privateKey,
+      dto.receiptId,
+      dto.amount,
+    );
+    return new ResponseReturnReceipt();
   }
 }
