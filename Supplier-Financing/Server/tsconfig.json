@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "jsx": "react",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitReturns": true,
+    "outDir": "./dist",
+    "rootDir": ".",
+    "strictPropertyInitialization": false,
+    "target": "es2018"
+  },
+  "include": ["config/**/*.ts", "src/**/*.ts", "typings/*.d.ts"]
+}

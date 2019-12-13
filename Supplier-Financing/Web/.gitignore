@@ -1,0 +1,17 @@
+# IDE and Editor
+.vscode
+
+# OSX
+.DS_Store
+
+# Dependencies
+node_modules
+npm-debug.log*
+yarn-error.log
+
+# production
+dist
+
+# umi
+.umi
+.umi-production

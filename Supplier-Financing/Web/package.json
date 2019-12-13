@@ -1,0 +1,43 @@
+{
+  "name": "supplier-financing",
+  "version": "0.0.0",
+  "author": "Jiahonzheng <jiahonzheng@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "cross-env UMI_ENV=dev umi dev --port=3007",
+    "start:dev": "cross-env UMI_ENV=dev umi dev --port=3007",
+    "build": "cross-env UMI_ENV=prod umi build",
+    "build:prod": "cross-env UMI_ENV=prod umi build",
+    "lint:es": "eslint --ext .js src mock",
+    "lint:ts": "tslint \"src/**/*.ts\" \"src/**/*.tsx\""
+  },
+  "dependencies": {
+    "ant-design-pro": "^2.3.1",
+    "dva": "^2.4.1",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "react": "^16.8.6",
+    "react-container-query": "^0.11.0",
+    "react-document-title": "^2.0.3",
+    "react-dom": "^16.8.6",
+    "react-media": "^1.9.2",
+    "umi-request": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.7",
+    "@types/lodash": "^4.14.123",
+    "@types/memoize-one": "^5.1.2",
+    "@types/react": "^16.8.15",
+    "@types/react-document-title": "^2.0.3",
+    "@types/react-dom": "^16.8.4",
+    "babel-eslint": "^10.0.1",
+    "cross-env": "^6.0.3",
+    "eslint": "^6.7.2",
+    "tslint": "^5.16.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-react": "^4.0.0",
+    "umi": "^2.6.16",
+    "umi-plugin-react": "^1.7.5",
+    "umi-types": "^0.5.8"
+  }
+}

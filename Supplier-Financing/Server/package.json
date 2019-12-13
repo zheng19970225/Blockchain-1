@@ -1,0 +1,59 @@
+{
+  "name": "supplier-financing-server",
+  "version": "0.0.0",
+  "description": "Supplier Financing Server",
+  "author": "Mr. Tseng <jiahonzheng@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn clean && tsc",
+    "clean": "shx rm -rf dist",
+    "format": "prettier --write \"**/*.{ts,js,json}\"",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "start": "cross-env NODE_ENV=development ts-node src/main.ts",
+    "start:dev": "cross-env NODE_ENV=development nodemon",
+    "start:prod": "cross-env NODE_ENV=production node dist/src/main.js"
+  },
+  "dependencies": {
+    "@nestjs/common": "^6.10.8",
+    "@nestjs/core": "^6.10.8",
+    "@nestjs/platform-express": "^6.10.8",
+    "@nestjs/typeorm": "^6.2.0",
+    "body-parser": "^1.19.0",
+    "class-transformer": "^0.2.0",
+    "class-validator": "^0.11.0",
+    "config": "https://github.com/asakurayohj/node-config",
+    "connect-redis": "3.4.0",
+    "cross-env": "^6.0.3",
+    "express-session": "^1.15.6",
+    "globby": "^9.0.0",
+    "mysql": "^2.16.0",
+    "nestjs-redis": "^1.2.5",
+    "pino": "^5.10.8",
+    "pino-pretty": "^3.5.0",
+    "shx": "^0.3.2",
+    "typeorm": "^0.2.12",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/config": "^0.0.36",
+    "@types/connect-redis": "^0.0.13",
+    "@types/express": "^4.16.0",
+    "@types/globby": "^9.1.0",
+    "@types/pino": "^5.8.3",
+    "nodemon": "^2.0.1",
+    "prettier": "^1.15.3",
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.5.4",
+    "tslint": "^5.12.1",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-prettier": "^1.17.0",
+    "typescript": "^3.2.4"
+  },
+  "nodemonConfig": {
+    "ext": "ts,hbs"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
+  }
+}

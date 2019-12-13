@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "jsx": "react",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "sourceMap": true,
+    "strict": true,
+    "target": "esnext",
+    "types": ["src/typing.d.ts"]
+  },
+  "include": ["config", "src"]
+}
