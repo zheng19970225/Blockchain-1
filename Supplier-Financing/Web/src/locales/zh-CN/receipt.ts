@@ -8,8 +8,8 @@ export default {
   'receipt.deadline': '截止日期',
 
   'receipt.transfer.address': '接收者公钥地址',
-  'receipt.transfer.address.placeholder': '请输入凭证接收者的公钥地址',
-  'receipt.transfer.address.error': '请输入凭证接收者的公钥地址',
+  'receipt.transfer.address.placeholder': '请输入凭证接收者的 42 位公钥地址',
+  'receipt.transfer.address.error': '请输入凭证接收者的 42 位公钥地址',
   'receipt.transfer.amount': '转移金额（分）',
   'receipt.transfer.amount.placeholder': '请输入转移的凭据金额（分）',
   'receipt.transfer.amount.error': '请输入转移的凭据金额（分）',
