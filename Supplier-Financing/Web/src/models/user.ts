@@ -1,10 +1,12 @@
+import { doRegisterBank, doRegisterCompany } from '@/pages/Registration/services';
 import { doFetchUserInfo } from '@/services/user';
+import { APIResponse } from '@/types';
+import { setAuthority } from '@/utils/authority';
+import { deleteAllCookies } from '@/utils/cookies';
+import { AppCode, formatAppCode } from '@/utils/enum';
+import { message } from 'antd';
 import { Effect } from 'dva';
 import { Reducer } from 'redux';
-import { APIResponse } from '@/types';
-import { AppCode } from '@/utils/enum';
-import { deleteAllCookies } from '@/utils/cookies';
-import { setAuthority } from '@/utils/authority';
 import { formatMessage } from 'umi-plugin-locale';
 
 /**
@@ -72,9 +74,39 @@ export interface UserModelType {
   state: UserModelState;
   effects: {
     fetchCurrentUser: Effect;
+    registerBank: Effect;
+    registerCompany: Effect;
   };
   reducers: {
     saveCurrentUser: Reducer<UserModelState>;
+  };
+}
+
+/**
+ * 注册银行
+ */
+export interface UserRegisterBankActionType {
+  type: 'user/registerBank';
+  payload?: {
+    uscc: string;
+    address: string;
+    password: string;
+    publicKey: string;
+    privateKey: string;
+  };
+}
+
+/**
+ * 注册公司
+ */
+export interface UserRegisterCompanyActionType {
+  type: 'user/registerCompany';
+  payload?: {
+    uscc: string;
+    address: string;
+    password: string;
+    publicKey: string;
+    privateKey: string;
   };
 }
 
@@ -121,6 +153,24 @@ const UserModel: UserModelType = {
         type: 'saveCurrentUser',
         payload: user.data,
       });
+    },
+    *registerBank(action: UserRegisterBankActionType, { call }) {
+      const res = yield call(doRegisterBank, action.payload);
+      if (res.code !== AppCode.SUCCESS) {
+        message.error(formatMessage({ id: 'registration.failure' }));
+        message.error(formatAppCode(res.sub));
+        return;
+      }
+      message.success(formatMessage({ id: 'registration.success' }));
+    },
+    *registerCompany(action: UserRegisterCompanyActionType, { call }) {
+      const res = yield call(doRegisterCompany, action.payload);
+      if (res.code !== AppCode.SUCCESS) {
+        message.error(formatMessage({ id: 'registration.failure' }));
+        message.error(formatAppCode(res.sub));
+        return;
+      }
+      message.success(formatMessage({ id: 'registration.success' }));
     },
   },
   reducers: {

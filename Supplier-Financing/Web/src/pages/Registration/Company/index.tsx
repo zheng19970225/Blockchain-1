@@ -1,6 +1,11 @@
 import GridContent from '@/components/GridContent';
 import ConnectState, { ConnectProps } from '@/models/connect';
-import { CurrentUser, formatUserTypeMessage, UserType } from '@/models/user';
+import {
+  CurrentUser,
+  formatUserTypeMessage,
+  UserType,
+  UserRegisterCompanyActionType,
+} from '@/models/user';
 import { disabledStyle, formItemLayout, tailFormItemLayout } from '@/utils/form';
 import { Button, Card, Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/es/form/Form';
@@ -44,6 +49,10 @@ class CompanyRegistration extends React.Component<
         });
         return;
       }
+      this.props.dispatch!({
+        type: 'user/registerCompany',
+        payload: { uscc, address, password, publicKey, privateKey },
+      } as UserRegisterCompanyActionType);
     });
   };
 
@@ -71,7 +80,7 @@ class CompanyRegistration extends React.Component<
                 ],
               })(
                 <Input.TextArea
-                  autosize={{ minRows: 2, maxRows: 2 }}
+                  autoSize={{ minRows: 2, maxRows: 2 }}
                   placeholder={formatMessage({ id: 'registration.address.placeholder' })}
                 />,
               )}
@@ -97,7 +106,7 @@ class CompanyRegistration extends React.Component<
                 initialValue: currentUser.address,
               })(
                 <Input.TextArea
-                  autosize={{ minRows: 2, maxRows: 2 }}
+                  autoSize={{ minRows: 2, maxRows: 2 }}
                   disabled={true}
                   style={disabledStyle}
                 />,
@@ -113,7 +122,7 @@ class CompanyRegistration extends React.Component<
                 ],
               })(
                 <Input.TextArea
-                  autosize={{ minRows: 4, maxRows: 6 }}
+                  autoSize={{ minRows: 8, maxRows: 10 }}
                   placeholder={formatMessage({ id: 'registration.privateKey.placeholder' })}
                 />,
               )}

@@ -14,4 +14,6 @@ export default {
   'registration.privateKey.placeholder': '请输入签发者私钥内容',
   'registration.privateKey.error': '请输入签发者私钥内容',
   'registration.submit': '注册',
+  'registration.success': '注册成功',
+  'registration.failure': '注册失败',
 };

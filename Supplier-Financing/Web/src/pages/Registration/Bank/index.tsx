@@ -1,8 +1,13 @@
 import GridContent from '@/components/GridContent';
 import ConnectState, { ConnectProps } from '@/models/connect';
-import { CurrentUser, formatUserTypeMessage, UserType } from '@/models/user';
+import {
+  CurrentUser,
+  formatUserTypeMessage,
+  UserRegisterBankActionType,
+  UserType,
+} from '@/models/user';
 import { disabledStyle, formItemLayout, tailFormItemLayout } from '@/utils/form';
-import { Button, Card, Form, Input, message } from 'antd';
+import { Button, Card, Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/es/form/Form';
 import { connect } from 'dva';
 import React from 'react';
@@ -26,7 +31,7 @@ class BankRegistration extends React.Component<BankRegistrationProps, BankRegist
   onRegisterButtonPress = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { setFields } = this.props.form;
-    this.props.form.validateFieldsAndScroll((err, values) => {
+    this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (err) return;
       const { uscc, address, password, publicKey, privateKey }: { [key: string]: string } = values;
       if (uscc.length !== 18) {
@@ -41,6 +46,10 @@ class BankRegistration extends React.Component<BankRegistrationProps, BankRegist
         });
         return;
       }
+      this.props.dispatch!({
+        type: 'user/registerBank',
+        payload: { uscc, address, password, publicKey, privateKey },
+      } as UserRegisterBankActionType);
     });
   };
 
@@ -68,7 +77,7 @@ class BankRegistration extends React.Component<BankRegistrationProps, BankRegist
                 ],
               })(
                 <Input.TextArea
-                  autosize={{ minRows: 2, maxRows: 2 }}
+                  autoSize={{ minRows: 2, maxRows: 2 }}
                   placeholder={formatMessage({ id: 'registration.address.placeholder' })}
                 />,
               )}
@@ -94,7 +103,7 @@ class BankRegistration extends React.Component<BankRegistrationProps, BankRegist
                 initialValue: currentUser.address,
               })(
                 <Input.TextArea
-                  autosize={{ minRows: 2, maxRows: 2 }}
+                  autoSize={{ minRows: 2, maxRows: 2 }}
                   disabled={true}
                   style={disabledStyle}
                 />,
@@ -110,7 +119,7 @@ class BankRegistration extends React.Component<BankRegistrationProps, BankRegist
                 ],
               })(
                 <Input.TextArea
-                  autosize={{ minRows: 4, maxRows: 6 }}
+                  autoSize={{ minRows: 8, maxRows: 10 }}
                   placeholder={formatMessage({ id: 'registration.privateKey.placeholder' })}
                 />,
               )}
