@@ -1,4 +1,13 @@
-import { IsNotEmpty, IsString, Length } from 'class-validator';
+import { Transform } from 'class-transformer';
+import {
+  IsNotEmpty,
+  IsString,
+  Length,
+  IsPositive,
+  IsNumber,
+  IsOptional,
+  IsInt,
+} from 'class-validator';
 import { AppCode, Response } from '../core/core.enum';
 import { User } from '../models/user.model.mysql';
 
@@ -17,7 +26,7 @@ export class ResponseGetUserInfo extends Response {
 }
 
 /**
- * 用户注册请求。
+ * 用户注册请求
  */
 export class RequestRegister {
   @IsString()
@@ -42,10 +51,35 @@ export class RequestRegister {
 }
 
 /**
- * 用户注册响应。
+ * 用户注册响应
  */
 export class ResponseRegister extends Response {
   constructor(data: User) {
+    super(AppCode.SUCCESS, data);
+  }
+}
+
+/**
+ * 获取所有账户信息
+ */
+export class RequestGetAllUsers {
+  @IsOptional()
+  @Transform(parseInt)
+  @IsInt()
+  @IsPositive()
+  public pageSize?: number;
+
+  @IsOptional()
+  @Transform(parseInt)
+  @IsInt()
+  public offset?: number;
+}
+
+/**
+ * 获取所有账户信息响应
+ */
+export class ResponseGetAllUsers extends Response {
+  constructor(data: User[]) {
     super(AppCode.SUCCESS, data);
   }
 }

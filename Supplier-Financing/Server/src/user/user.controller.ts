@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
 import {
   Authenticated,
   IsAdminBank,
@@ -8,7 +8,9 @@ import {
 import { PinoLoggerService } from '../core/core.logger';
 import { User } from '../models/user.model.mysql';
 import {
+  RequestGetAllUsers,
   RequestRegister,
+  ResponseGetAllUsers,
   ResponseGetUserInfo,
   ResponseRegister,
 } from './user.dto';
@@ -67,5 +69,12 @@ export class UserController {
       dto.privateKey,
     );
     return new ResponseRegister(user);
+  }
+
+  @Get('all')
+  @Authenticated()
+  public async getAllUsers(@Query() dto: RequestGetAllUsers) {
+    const users = await this.userService.getAllUsers(dto.offset, dto.pageSize);
+    return new ResponseGetAllUsers(users);
   }
 }

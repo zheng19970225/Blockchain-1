@@ -112,4 +112,17 @@ export class UserService {
       await runner.release();
     }
   }
+
+  /**
+   * 获取所有的账户信息。
+   * @param offset 页偏移
+   * @param pageSize 页数据大小
+   */
+  public async getAllUsers(offset: number = 0, pageSize: number = 20) {
+    return this.mysql.users.find({
+      select: ['uscc', 'address', 'type'],
+      skip: offset,
+      take: pageSize,
+    });
+  }
 }
