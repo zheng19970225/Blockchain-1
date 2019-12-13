@@ -1,12 +1,13 @@
 import GridContent from '@/components/GridContent';
 import { AppCode, formatAppCode } from '@/utils/enum';
-import { Card, message, Tabs, Table } from 'antd';
+import { formatCurrency } from '@/utils/utils';
+import { Card, message, Table, Tabs } from 'antd';
+import { ColumnProps } from 'antd/lib/table';
+import Moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { doGetDetailReceipts, ResponseGetDetailReceipts } from './services';
 import { TotalReceipts } from './TotalReceipts';
-import { ColumnProps } from 'antd/lib/table';
-import { formatCurrency } from '@/utils/utils';
 
 const { TabPane } = Tabs;
 
@@ -41,7 +42,7 @@ const columns: ColumnProps<Receipt>[] = [
   {
     title: formatMessage({ id: 'receipt.deadline' }),
     dataIndex: 'deadline',
-    render: (deadline: string) => new Date(parseInt(deadline) * 1000).toUTCString(),
+    render: (deadline: string) => Moment(parseInt(deadline) * 1000).format('YYYY-MM-DD'),
   },
 ];
 
