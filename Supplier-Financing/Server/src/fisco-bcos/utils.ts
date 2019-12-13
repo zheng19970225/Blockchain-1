@@ -12,16 +12,16 @@ Configuration.setConfig(path.join(__dirname, './config/config.json'));
 const web3jService = new Web3jService();
 
 // 智能合约部署地址。
-export const CONTRACT_ADDRESS = '0xda0b438ae7993dc90feb95cf24c58e6d76033aaf';
+export const CONTRACT_ADDRESS = '0x661b434be321a5fac3d07d295e7b042a40699849';
 // 智能合约 ABI 定义。
 export const CONTRACT_ABI = [
   {
     constant: false,
     inputs: [
-      { name: 'receiptId', type: 'int256' },
-      { name: 'amount', type: 'int256' },
+      { name: 'addr', type: 'address' },
+      { name: 'uscc', type: 'string' },
     ],
-    name: 'returnCredit',
+    name: 'registerCompany',
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
@@ -30,10 +30,10 @@ export const CONTRACT_ABI = [
   {
     constant: false,
     inputs: [
-      { name: 'addr', type: 'address' },
-      { name: 'uscc', type: 'string' },
+      { name: 'receiptId', type: 'int256' },
+      { name: 'amount', type: 'int256' },
     ],
-    name: 'registerCompany',
+    name: 'returnReceipt',
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
@@ -58,7 +58,7 @@ export const CONTRACT_ABI = [
       { name: 'amount', type: 'int256' },
       { name: 'deadline', type: 'int256' },
     ],
-    name: 'transferCredit',
+    name: 'transferReceipt',
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
@@ -68,7 +68,6 @@ export const CONTRACT_ABI = [
     inputs: [
       { name: '_adminAddr', type: 'address' },
       { name: 'uscc', type: 'string' },
-      { name: '_suffix', type: 'string' },
     ],
     payable: false,
     stateMutability: 'nonpayable',

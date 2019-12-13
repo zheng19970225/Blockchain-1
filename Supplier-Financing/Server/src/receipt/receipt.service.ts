@@ -106,7 +106,7 @@ export class ReceiptService {
     const ret = await this.blockchain.sendTransaction(
       publicKey,
       privateKey,
-      'transferCredit',
+      'transferReceipt',
       [to, amount, deadline],
     );
     // 交易失败。
@@ -131,7 +131,7 @@ export class ReceiptService {
     const ret = await this.blockchain.sendTransaction(
       publicKey,
       privateKey,
-      'returnCredit',
+      'returnReceipt',
       [receiptId, amount],
     );
     // 交易失败。

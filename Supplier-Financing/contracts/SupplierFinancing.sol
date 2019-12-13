@@ -143,7 +143,7 @@ contract SupplierFinancing {
     // 1. debtor 银行向 debtee 公司提供信用凭证。
     // 2. debtor 公司向 debtee 公司转移信用凭证。
     // 3. debtor 公司向 debtee 银行借款（转移信用至银行，表示融资）。
-    function transferCredit(address debtee, int256 amount, int deadline) public {
+    function transferReceipt(address debtee, int256 amount, int deadline) public {
         // 获取债务人的票据总量。
         int debtorIn; int debtorOut;
         (debtorIn, debtorOut) = selectCompanyReceipts(msg.sender);
@@ -151,6 +151,7 @@ contract SupplierFinancing {
         int debteeIn; int debteeOut;
         (debteeIn, debteeOut) = selectCompanyReceipts(debtee);
         // 判断转移金额是否合法。
+        require(amount > 0, "amount must be greater than zero");
         require(debtorIn - debtorOut >= amount, "debtor does not have enough balance");
         // 更新双方的票据总量。
         debtorOut += amount;
@@ -171,7 +172,7 @@ contract SupplierFinancing {
     // 1. debtee 公司向 debtor 公司返还信用凭证（表示 debtor 公司向 debtee 公司支付货款）。
     // 2. debtee 公司向 debtor 银行返还信用凭证（表示期限前撤销信用凭证）。
     // 3. debtee 银行向 debtor 公司返还信用凭证（表示公司完成融资的还款）。
-    function returnCredit(int receiptId, int amount) public {
+    function returnReceipt(int receiptId, int amount) public {
         address r1; address r2; int r3; int r4; int r5;
         (r1, r2, r3, r4, r5) = selectReceipt("t_in_receipt", toString(msg.sender), receiptId);
         // 获取债务人的票据总量。
@@ -181,6 +182,7 @@ contract SupplierFinancing {
         int debteeIn; int debteeOut;
         (debteeIn, debteeOut) = selectCompanyReceipts(r1);
         // 判断返还金额是否合法。
+        require(amount > 0, "amount must be greater than zero");
         require(r4 >= amount, "returning credit more than amount transfered at first is not allowed");
         // 更新双方的票据记录。
         updateReceipts("t_in_receipt", toString(r1), receiptId, r4 - amount);

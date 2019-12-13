@@ -8,6 +8,7 @@ import { FormComponentProps } from 'antd/es/form/Form';
 import { connect } from 'dva';
 import { Moment } from 'moment';
 import React from 'react';
+import { router } from 'umi';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { doTransferReceipt } from './services';
 
