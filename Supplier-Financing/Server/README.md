@@ -22,15 +22,15 @@ yarn
 # Server/ 根目录执行。
 yarn start:dev
 
-# 生产模式。
-# Server/ 根目录执行。
-yarn start:prod
-
-# 编译
-# Server/ 根目录执行。
-yarn build
-
 # 格式化代码
 # Server/ 根目录执行。
 yarn format
+
+# 在本次实验中，编译和生产模式我都没运行过，估计有依赖的路径问题，所以还是以开发模式运行吧。
+# 编译
+# Server/ 根目录执行。
+yarn build
+# 生产模式。
+# Server/ 根目录执行。
+yarn start:prod
 ```
