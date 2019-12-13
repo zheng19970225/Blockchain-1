@@ -205,7 +205,7 @@ export function sendRawTransactionUsingCustomCredentials(
           output: '',
         };
         if (output !== '0x') {
-          ret.output = utils.decodeMethod(item, output);
+          ret.output = web3Utils.decodeParams(item.outputs, output);
         }
         resolve(ret);
       })
