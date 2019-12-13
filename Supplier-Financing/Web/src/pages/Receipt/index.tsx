@@ -1,16 +1,109 @@
-import React from 'react';
-import { ConnectProps } from '@/models/connect';
-import { FormComponentProps } from 'antd/lib/form';
 import GridContent from '@/components/GridContent';
+import { AppCode, formatAppCode } from '@/utils/enum';
+import { Card, message, Tabs, Table } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { formatMessage } from 'umi-plugin-react/locale';
+import { doGetDetailReceipts, ResponseGetDetailReceipts } from './services';
 import { TotalReceipts } from './TotalReceipts';
+import { ColumnProps } from 'antd/lib/table';
 
-interface ReceiptPageProps extends ConnectProps, FormComponentProps {}
+const { TabPane } = Tabs;
 
-class ReceiptPage extends React.Component<ReceiptPageProps> {
+interface ReceiptPageProps {}
+
+export interface Receipt {
+  debtor: string;
+  debtee: string;
+  receiptId: number;
+  amount: string;
+  deadline: string;
+}
+
+const columns: ColumnProps<Receipt>[] = [
+  {
+    title: formatMessage({ id: 'receipt.receiptId' }),
+    dataIndex: 'receiptId',
+  },
+  {
+    title: formatMessage({ id: 'receipt.debtee' }),
+    dataIndex: 'debtee',
+  },
+  {
+    title: formatMessage({ id: 'receipt.debtor' }),
+    dataIndex: 'debtor',
+  },
+  {
+    title: formatMessage({ id: 'receipt.amount' }),
+    dataIndex: 'amount',
+  },
+  {
+    title: formatMessage({ id: 'receipt.deadline' }),
+    dataIndex: 'deadline',
+  },
+];
+
+function DetailReceipt(props: { type: 'in' | 'out' }) {
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState({} as Pick<ResponseGetDetailReceipts, 'data'>['data']);
+
+  const PAGE_SIZE = 20;
+
+  useEffect(() => {
+    // 获取全量数据（不分页）。
+    doGetDetailReceipts(props.type, PAGE_SIZE, -1)
+      .then(res => {
+        if (!res || res.code !== AppCode.SUCCESS) {
+          // tslint:no-console
+          console.error(res.msg, res.data);
+          message.error(formatAppCode(res.sub));
+        }
+        setData(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        message.error(err);
+        setLoading(false);
+      });
+  }, []);
+
+  const rowKey = (record: Receipt, index: number) => {
+    return record.receiptId + '';
+  };
+
+  return (
+    <Table
+      pagination={{
+        total: data.total,
+        position: 'both',
+        pageSize: PAGE_SIZE,
+      }}
+      rowKey={rowKey}
+      loading={loading}
+      dataSource={data.list}
+      columns={columns}
+    />
+  );
+}
+
+class ReceiptPage extends React.PureComponent<ReceiptPageProps> {
   render() {
     return (
       <GridContent>
         <TotalReceipts />
+        <Card
+          bordered={false}
+          style={{ marginTop: 24 }}
+          bodyStyle={{ padding: '8px 32px 32px 32px' }}
+        >
+          <Tabs defaultActiveKey="1">
+            <TabPane tab={formatMessage({ id: 'receipt.in' })} key="1">
+              <DetailReceipt type="in" />
+            </TabPane>
+            <TabPane tab={formatMessage({ id: 'receipt.out' })} key="2">
+              <DetailReceipt type="out" />
+            </TabPane>
+          </Tabs>
+        </Card>
       </GridContent>
     );
   }

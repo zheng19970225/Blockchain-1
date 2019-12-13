@@ -1,17 +1,11 @@
 import GridContent from '@/components/GridContent';
-import ConnectState, { ConnectProps } from '@/models/connect';
 import { CurrentUser, formatUserTypeMessage } from '@/models/user';
-import { TotalReceipts } from '@/pages/Receipt/TotalReceipts';
-import { disabledStyle, formItemLayout } from '@/utils/form';
-import { Card, Form, Input, List, Table } from 'antd';
-import { FormComponentProps } from 'antd/es/form/Form';
-import { connect } from 'dva';
+import { formatAppCode } from '@/utils/enum';
+import { Card, message, Table } from 'antd';
+import { ColumnProps } from 'antd/lib/table';
 import React from 'react';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { ColumnProps } from 'antd/lib/table';
 import { doGetAllUsers } from '../services';
-import { message } from 'antd';
-import { formatAppCode } from '@/utils/enum';
 
 interface AccountAllProps {}
 
@@ -54,7 +48,7 @@ class AccountAll extends React.Component<AccountAllProps, AccountAllState> {
     // 获取全部数据（不分页）。
     doGetAllUsers(PAGE_SIZE, -1)
       .then(res => {
-        if (res.code !== 200) {
+        if (!res || res.code !== 200) {
           message.error(formatAppCode(res.sub));
           return;
         }

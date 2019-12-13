@@ -5,6 +5,7 @@ import login from './zh-CN/login';
 import menu from './zh-CN/menu';
 import settings from './zh-CN/settings';
 import registration from './zh-CN/registration';
+import receipt from './zh-CN/receipt';
 
 export default {
   ...globalHeader,
@@ -14,4 +15,5 @@ export default {
   ...account,
   ...errors,
   ...registration,
+  ...receipt,
 };

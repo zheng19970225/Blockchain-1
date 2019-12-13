@@ -12,9 +12,7 @@ export function TotalReceipts() {
 
   useEffect(() => {
     doGetTotalReceipts().then(res => {
-      if (res.code !== AppCode.SUCCESS) {
-        // tslint:no-console
-        console.error(res.msg, res.data);
+      if (!res || res.code !== AppCode.SUCCESS) {
         message.error(formatAppCode(res.sub));
       }
       setReceipts({ inReceipts: res.data.in_receipts, outReceipts: res.data.out_receipts });

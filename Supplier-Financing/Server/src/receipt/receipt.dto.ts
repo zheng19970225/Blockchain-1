@@ -1,3 +1,5 @@
+import { Transform } from 'class-transformer';
+import { IsInt, IsOptional, IsPositive } from 'class-validator';
 import { AppCode, Response } from '../core/core.enum';
 import { Receipt } from './receipt.service';
 
@@ -18,13 +20,24 @@ export class ResponseTotalReceipts extends Response {
 /**
  * 获取账户凭证详情请求
  */
-export class RequestDetailReceipts {}
+export class RequestDetailReceipts {
+  @IsOptional()
+  @Transform(parseInt)
+  @IsInt()
+  @IsPositive()
+  public pageSize?: number;
+
+  @IsOptional()
+  @Transform(parseInt)
+  @IsInt()
+  public offset?: number;
+}
 
 /**
  * 获取账户凭证详情响应
  */
 export class ResponseDetailReceipts extends Response {
-  constructor(data: Receipt[]) {
+  constructor(data: { list: Receipt[]; total: number; next: number }) {
     super(AppCode.SUCCESS, data);
   }
 }

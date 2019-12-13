@@ -156,7 +156,7 @@ const UserModel: UserModelType = {
     },
     *registerBank(action: UserRegisterBankActionType, { call }) {
       const res = yield call(doRegisterBank, action.payload);
-      if (res.code !== AppCode.SUCCESS) {
+      if (!res || res.code !== AppCode.SUCCESS) {
         message.error(formatMessage({ id: 'registration.failure' }));
         message.error(formatAppCode(res.sub));
         return;
@@ -165,7 +165,7 @@ const UserModel: UserModelType = {
     },
     *registerCompany(action: UserRegisterCompanyActionType, { call }) {
       const res = yield call(doRegisterCompany, action.payload);
-      if (res.code !== AppCode.SUCCESS) {
+      if (!res || res.code !== AppCode.SUCCESS) {
         message.error(formatMessage({ id: 'registration.failure' }));
         message.error(formatAppCode(res.sub));
         return;

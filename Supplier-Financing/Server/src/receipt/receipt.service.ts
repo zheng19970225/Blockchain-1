@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { UserNotExistException } from '../core/core.exception';
 import { PinoLoggerService } from '../core/core.logger';
 import { FiscoBcosService } from '../fisco-bcos/fisco-bcos.service';
+import { pagination } from '../utils';
 
 export interface Receipt {
   addr: string;
@@ -44,19 +45,43 @@ export class ReceiptService {
    * 查询账户借入凭证详情数据。
    * @param address 账户公钥地址
    */
-  public async selectInReceipts(address: string): Promise<Receipt[]> {
+  public async selectInReceipts(
+    address: string,
+    offset: number = 0,
+    pageSize: number = 20,
+  ) {
     const condition = this.blockchain.crudCondition();
     condition.eq('debtee', address);
-    return this.blockchain.crudSelect('t_in_receipt', address, condition);
+    const receipts: Receipt[] = await this.blockchain.crudSelect(
+      't_in_receipt',
+      address,
+      condition,
+    );
+    const newOffset = offset === -1 ? 0 : offset;
+    const list: Receipt[] =
+      offset === -1 ? receipts : pagination(receipts, offset, pageSize);
+    return { list, total: receipts.length, next: newOffset + list.length };
   }
 
   /**
    * 查询账户借出凭证详情数据。
    * @param address 账户公钥地址
    */
-  public async selectOutReceipts(address: string): Promise<Receipt[]> {
+  public async selectOutReceipts(
+    address: string,
+    offset: number = 0,
+    pageSize: number = 20,
+  ) {
     const condition = this.blockchain.crudCondition();
     condition.eq('debtor', address);
-    return this.blockchain.crudSelect('t_out_receipt', address, condition);
+    const receipts: Receipt[] = await this.blockchain.crudSelect(
+      't_out_receipt',
+      address,
+      condition,
+    );
+    const newOffset = offset === -1 ? 0 : offset;
+    const list: Receipt[] =
+      offset === -1 ? receipts : pagination(receipts, offset, pageSize);
+    return { list, total: receipts.length, next: newOffset + list.length };
   }
 }

@@ -41,7 +41,7 @@ const LoginModel: LoginModelType = {
   effects: {
     *login(action: LoginLoginActionType, { call, put }) {
       const res: ResponseLogin = yield call(doLogin, action.payload!);
-      if (res.code !== 200) {
+      if (!res || res.code !== 200) {
         message.error(formatAppCode(res.sub));
         return;
       }

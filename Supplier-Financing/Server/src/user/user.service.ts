@@ -120,8 +120,8 @@ export class UserService {
    * @param pageSize 页数据大小
    */
   public async getAllUsers(offset: number = 0, pageSize: number = 20) {
-    const newOffset = offset === -1 ? 0 : offset;
     const users = await this.mysql.users.find();
+    const newOffset = offset === -1 ? 0 : offset;
     const list = offset === -1 ? users : pagination(users, offset, pageSize);
     return {
       list,
