@@ -26,12 +26,12 @@ const columns: ColumnProps<Receipt>[] = [
     dataIndex: 'receiptId',
   },
   {
-    title: formatMessage({ id: 'receipt.debtee' }),
-    dataIndex: 'debtee',
-  },
-  {
     title: formatMessage({ id: 'receipt.debtor' }),
     dataIndex: 'debtor',
+  },
+  {
+    title: formatMessage({ id: 'receipt.debtee' }),
+    dataIndex: 'debtee',
   },
   {
     title: formatMessage({ id: 'receipt.amount' }),
