@@ -35,3 +35,30 @@ export function doGetDetailReceipts(type: 'in' | 'out', pageSize: number, offset
     `/receipt/${type}?pageSize=${pageSize}&offset=${offset}`,
   );
 }
+
+/**
+ * 转移信用凭证响应
+ */
+export interface ResponseTransferReceipt extends APIResponse {}
+
+/**
+ * 转移信用凭证。
+ */
+export function doTransferReceipt(
+  debtee: string,
+  amount: number,
+  deadline: number,
+  publicKey: string,
+  privateKey: string,
+) {
+  return request<ResponseTransferReceipt>('/receipt/transfer', {
+    method: 'POST',
+    data: {
+      debtee,
+      amount,
+      deadline,
+      publicKey,
+      privateKey,
+    },
+  });
+}
